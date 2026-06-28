@@ -51,9 +51,8 @@ sitio/
 
 ## Notas de diseño
 - **Íconos de rubros:** imágenes reales del cliente en `assets/icons/` (recortadas de
-  `iconos.jpeg` con PIL, fondo transparente). Mapa: panales, alimentacion, higiene, ropa,
-  juguetes. **Accesorios** NO usa el cochecito: usa un **carrito de compra con el manubrio
-  a la derecha** (SVG espejado, en `js/main.js` const `CART_RIGHT`).
+  `iconos.jpeg` con PIL, fondo transparente). Los 6 usan los íconos de la imagen del
+  cliente, incluido **Accesorios = cochecito** (`cochecito.png`, tal cual su imagen).
 - **Íconos sociales:** `assets/icons/whatsapp.png` e `instagram.png` se usan en el **footer**
   (sobre el navy lucen bien). En la barra superior se dejaron íconos de línea coral porque
   los de durazno se lavaban sobre el fondo durazno.

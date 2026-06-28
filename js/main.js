@@ -11,20 +11,10 @@ const WHATSAPP = "5492612512059";
 
 /* --------- ÍCONOS DE RUBROS (imágenes reales del cliente) ---------- */
 const catImg = (file) => `<img class="cat__img" src="assets/icons/${file}.png" alt="" />`;
-// Accesorios: carrito de compra con el manubrio a la derecha (espejado)
-const CART_RIGHT =
-  '<svg class="cat__svg" viewBox="0 0 48 48" aria-hidden="true">' +
-    '<g transform="translate(48,0) scale(-1,1)">' +
-      '<path d="M13 16 H40 L37 30 H17 Z" fill="#fdeae0" stroke="#e8856b" stroke-width="2.6" stroke-linejoin="round"/>' +
-      '<path d="M13 16 L9 9 H5" fill="none" stroke="#e8856b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<circle cx="20" cy="36" r="3" fill="#fdeae0" stroke="#e8856b" stroke-width="2.6"/>' +
-      '<circle cx="33" cy="36" r="3" fill="#fdeae0" stroke="#e8856b" stroke-width="2.6"/>' +
-    '</g>' +
-  '</svg>';
 const ICONS = {
   panales:      catImg("panales"),
   alimentacion: catImg("alimentacion"),
-  accesorios:   CART_RIGHT,
+  accesorios:   catImg("cochecito"),   // cochecito de la imagen del cliente
   higiene:      catImg("higiene"),
   ropa:         catImg("ropa"),
   juguetes:     catImg("juguetes"),
