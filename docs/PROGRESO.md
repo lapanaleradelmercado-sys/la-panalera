@@ -62,6 +62,14 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - [x] Fotos de productos desde la hoja **info** (link de Drive → imagen). Falta hacer
       públicos los archivos en Drive para que se vean.
 
+## Ajustes 2026-06-28 (noche 5)
+- [x] Hero mobile: la canasta más **alta y a la derecha** (la foto llena la columna con
+      `object-fit: cover`, col 52%). Su borde izquierdo toca el texto pero no se mete debajo.
+- [x] Badge "TODO LO QUE TU BEBÉ NECESITA" en **un solo renglón** (`white-space: nowrap`).
+- [x] **Rayitas de categorías corregidas**: verticales CORTAS y centradas (pseudo-elemento,
+      NO tocan la horizontal), línea horizontal entre filas aparte. Igual que el mockup.
+      Las de la franja de confianza también más cortitas/sutiles.
+
 ## Ajustes 2026-06-28 (noche 4)
 - [x] **Logo sticker**: `assets/logo-sticker.png` (borde blanco die-cut, generado con PIL)
       + `filter: drop-shadow` para efecto relieve. Se usa en header y footer (el favicon

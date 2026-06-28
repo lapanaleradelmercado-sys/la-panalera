@@ -298,24 +298,24 @@ img.ico { object-fit: contain; }
 .hero__inner {
   background: #fcf3ee; /* mismo crema que la foto */
   border-radius: var(--radius-lg);
-  padding: 20px 18px;
+  padding: 18px 0 18px 18px;
   position: relative;
   overflow: hidden;
-  min-height: 210px;
+  min-height: 256px;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 6px;
+  align-items: stretch;
+  gap: 2px;
 }
 .hero__content {
-  position: relative; z-index: 2; flex: 1 1 auto; max-width: 54%;
-  display: flex; flex-direction: column; align-items: flex-start;
+  position: relative; z-index: 2; flex: 1 1 auto; max-width: 48%;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
 }
 .hero__pic { display: contents; }
 .pill {
   display: inline-block; background: var(--peach-200); color: var(--accent-dark);
-  font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-  padding: 4px 9px; border-radius: 999px; margin-bottom: 8px;
+  font-size: 8.5px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 999px; margin-bottom: 8px; white-space: nowrap;
 }
 .hero__title {
   font-size: clamp(20px, 5.7vw, 40px); font-weight: 800; line-height: 1.12;
@@ -339,10 +339,10 @@ img.ico { object-fit: contain; }
 
 /* foto del hero — detrás del texto (full-bleed) */
 .hero__pic { display: contents; }
-/* MOBILE: la foto (recorte de la canasta) va como columna a la derecha */
+/* MOBILE: la foto (recorte de la canasta) llena la columna derecha, alta y a la derecha */
 .hero__photo {
-  order: 2; position: static; flex: 0 0 46%; width: 46%; height: auto;
-  align-self: center; object-fit: contain; z-index: 0;
+  order: 2; position: static; flex: 0 0 52%; width: 52%; height: auto;
+  align-self: stretch; object-fit: cover; object-position: 42% center; z-index: 0;
 }
 .hero__scrim { display: none; }
 
@@ -359,14 +359,18 @@ img.ico { object-fit: contain; }
   gap: 0; margin-bottom: 18px;
 }
 .cat {
+  position: relative;
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   padding: 18px 8px; border-radius: 0;
-  border-right: 1.5px solid var(--divider);
-  border-bottom: 1.5px solid var(--divider);
   transition: background .2s var(--ease);
 }
-.cat:nth-child(3n) { border-right: none; }      /* última columna */
-.cat:nth-child(n+4) { border-bottom: none; }    /* última fila (4,5,6) */
+/* rayita vertical CORTA y centrada entre columnas (NO llega a la horizontal) */
+.cat:not(:nth-child(3n))::after {
+  content: ""; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  width: 1px; height: 42px; background: var(--divider);
+}
+/* línea horizontal entre las dos filas (en la 1ra fila) */
+.cat:nth-child(-n+3) { box-shadow: inset 0 -1px 0 var(--divider); }
 .cat:hover { background: var(--peach-50); }
 .cat__ico { color: var(--accent); display: grid; place-items: center; }
 .cat__ico svg, .cat__ico img { width: 46px; height: 46px; object-fit: contain; }
@@ -462,10 +466,14 @@ img.ico { object-fit: contain; }
   box-shadow: var(--shadow-sm); padding: 24px 8px;
 }
 .trust__item {
+  position: relative;
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: 9px;
-  padding: 0 6px; border-right: 1.5px solid var(--divider);
+  padding: 0 6px;
 }
-.trust__item:last-child { border-right: none; }
+.trust__item:not(:last-child)::after {
+  content: ""; position: absolute; right: 0; top: 18%; bottom: 18%;
+  width: 1px; background: var(--divider);
+}
 .trust__ico {
   width: 48px; height: 48px; border-radius: 50%; background: var(--peach-100);
   display: grid; place-items: center; color: var(--accent); flex-shrink: 0;
@@ -578,6 +586,8 @@ img.ico { object-fit: contain; }
     border: none;
     background: var(--white); box-shadow: var(--shadow-sm); padding: 20px 18px;
   }
+  .cat::after { display: none; }                          /* sin rayita vertical en desktop */
+  .cat:nth-child(-n+3) { box-shadow: var(--shadow-sm); }  /* restaura sombra de card */
   .cat__ico svg, .cat__ico img { width: 40px; height: 40px; }
   .cat__body { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
   .cat__name { font-size: 15px; }
