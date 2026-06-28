@@ -302,14 +302,14 @@ img.ico { object-fit: contain; }
   padding: 18px 0 18px 18px;
   position: relative;
   overflow: hidden;
-  min-height: 215px;
+  min-height: 230px;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0;
 }
 .hero__content {
-  position: relative; z-index: 2; flex: 0 0 47%; max-width: 47%;
+  position: relative; z-index: 2; flex: 0 0 43%; max-width: 43%;
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
 }
 .hero__pic { display: contents; }
@@ -319,7 +319,7 @@ img.ico { object-fit: contain; }
   padding: 4px 9px; border-radius: 999px; margin-bottom: 8px; white-space: nowrap;
 }
 .hero__title {
-  font-size: clamp(20px, 5.7vw, 40px); font-weight: 800; line-height: 1.12;
+  font-size: clamp(18px, 4.9vw, 40px); font-weight: 800; line-height: 1.13;
   letter-spacing: -.02em; margin-bottom: 8px;
 }
 .hero__title-accent { color: var(--accent); }
@@ -342,7 +342,7 @@ img.ico { object-fit: contain; }
 .hero__pic { display: contents; }
 /* MOBILE: la canasta ENTERA (contain) a la derecha del texto, sin recortar nada */
 .hero__photo {
-  order: 2; position: static; flex: 0 0 53%; width: 53%; height: auto; max-height: 230px;
+  order: 2; position: static; flex: 0 0 57%; width: 57%; height: auto; max-height: 240px;
   align-self: center; object-fit: contain; object-position: right center; z-index: 0;
 }
 /* fundido blanco MUY sutil del lado izquierdo (transición hacia el texto) */
