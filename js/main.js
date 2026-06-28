@@ -1,20 +1,26 @@
 /* =========================================================
    LA PAÑALERA — Lógica del sitio
-   Todo lo editable (WhatsApp, categorías, productos) está
-   acá arriba. Para agregar un producto: sumás un objeto a
-   la lista PRODUCTOS. Nada más.
+   Config editable arriba. Los productos se cargan desde la
+   planilla de Google (hoja PRODUCTOS: ID, NOMBRE, RUBRO, PRECIO).
    ========================================================= */
 
 /* --------- CONFIGURACIÓN ---------- */
-// Número con código de país, sin "+", sin espacios ni guiones.
+// WhatsApp: código país + número, sin "+", sin espacios.
 const WHATSAPP = "5492612512059";
+
+// Instagram
+const INSTAGRAM = "https://www.instagram.com/lapanaleradelmercado";
+
+// Planilla de productos (Google Sheet publicada como CSV)
+const SHEET_CSV =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSAL5Y6DSQSj4pkLiUHlOWjr4lhX_ZgSaWo_L7S_wPUQ3rn55R-1EwCs35n_dkj2ZCBBTTfeVA35cjB/pub?output=csv";
 
 /* --------- ÍCONOS DE RUBROS (imágenes reales del cliente) ---------- */
 const catImg = (file) => `<img class="cat__img" src="assets/icons/${file}.png" alt="" />`;
 const ICONS = {
   panales:      catImg("panales"),
   alimentacion: catImg("alimentacion"),
-  accesorios:   catImg("cochecito"),   // cochecito de la imagen del cliente
+  accesorios:   catImg("cochecito"),
   higiene:      catImg("higiene"),
   ropa:         catImg("ropa"),
   juguetes:     catImg("juguetes"),
@@ -30,81 +36,155 @@ const CATEGORIES = [
   { id: "juguetes",     name: "Juguetes" },
 ];
 
-/* --------- PRODUCTOS (placeholders de muestra) ---------- */
-const PRODUCTS = [
-  { name: "Pañales Ultra Suaves Talle M", cat: "Pañales",      price: 12990, tag: "Nuevo" },
-  { name: "Mamadera Anticólicos 240ml",   cat: "Alimentación", price: 8500 },
-  { name: "Body Algodón Pima (pack x3)",  cat: "Ropa",         price: 15900, tag: "Oferta" },
-  { name: "Set de Higiene para Bebé",     cat: "Higiene",      price: 9990 },
-  { name: "Móvil Musical para Cuna",      cat: "Juguetes",     price: 18900 },
-  { name: "Cochecito Liviano Plegable",   cat: "Accesorios",   price: 145000, tag: "Destacado" },
-  { name: "Crema Protectora x200g",       cat: "Higiene",      price: 6200 },
-  { name: "Osito de Peluche Suave",       cat: "Juguetes",     price: 11500 },
-];
+/* --------- PRODUCTOS (se llenan desde la planilla) ---------- */
+let PRODUCTS = [];
 
-/* --------- ÍCONO genérico para card sin foto ---------- */
+/* --------- ÍCONOS varios ---------- */
 const PLACEHOLDER_ICON = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="28" rx="4"/><circle cx="17" cy="20" r="3"/><path d="M6 32l9-8 7 6 8-9 12 11"/></svg>';
 const HEART = '<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c-1 4-7 9-7 9z"/></svg>';
-const CHAT = '<svg viewBox="0 0 24 24"><path d="M21 11.5a8 8 0 0 1-11.8 7L4 20l1.4-4.5A8 8 0 1 1 21 11.5z"/></svg>';
 const CART_ADD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M13 8v5M10.5 10.5h5" opacity=".9"/></svg>';
+const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>';
 
 /* --------- HELPERS ---------- */
 const $ = (sel) => document.querySelector(sel);
-const formatPrice = (n) => "$" + n.toLocaleString("es-AR");
-const waLink = (text) =>
-  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+const formatPrice = (n) => "$" + Number(n).toLocaleString("es-AR");
+const waLink = (text) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+// normaliza para comparar rubros (minúsculas, sin acentos): "PAÑALES" -> "panales"
+const norm = (s) =>
+  (s || "").toString().trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const catName = (id) => (CATEGORIES.find((c) => c.id === id) || {}).name || id;
 
-/* --------- RENDER: categorías ---------- */
-function renderCategories() {
-  const grid = $("#catsGrid");
-  grid.innerHTML = CATEGORIES.map(
-    (c) => `
-    <a href="#cat-${c.id}" class="cat" id="cat-${c.id}">
-      <span class="cat__ico">${ICONS[c.id]}</span>
-      <span class="cat__body">
-        <span class="cat__name">${c.name}</span>
-        <span class="cat__link">Ver todo
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </span>
-    </a>`
-  ).join("");
-
-  // footer
-  $("#footerCats").innerHTML = CATEGORIES.map(
-    (c) => `<li><a href="#cat-${c.id}">${c.name}</a></li>`
-  ).join("");
+/* =========================================================
+   CARGA DE PRODUCTOS DESDE LA PLANILLA
+   ========================================================= */
+function parseCSV(text) {
+  const rows = [];
+  let field = "", row = [], inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQ) {
+      if (c === '"') { if (text[i + 1] === '"') { field += '"'; i++; } else inQ = false; }
+      else field += c;
+    } else {
+      if (c === '"') inQ = true;
+      else if (c === ",") { row.push(field); field = ""; }
+      else if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+      else if (c !== "\r") field += c;
+    }
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  return rows;
 }
 
-/* --------- RENDER: productos ---------- */
-function renderProducts() {
-  const grid = $("#productsGrid");
-  grid.innerHTML = PRODUCTS.map((p, i) => `
+async function loadProducts() {
+  try {
+    const res = await fetch(SHEET_CSV);
+    const text = await res.text();
+    const rows = parseCSV(text).filter((r) => r.some((c) => c.trim() !== ""));
+    rows.shift(); // saca la fila de encabezados
+    PRODUCTS = rows
+      .map((r) => {
+        const cat = norm(r[2]);
+        return {
+          id: (r[0] || "").trim(),
+          name: (r[1] || "").trim(),
+          cat,
+          catName: catName(cat),
+          price: Number(String(r[3] || "").replace(/[^\d]/g, "")) || 0,
+        };
+      })
+      .filter((p) => p.name);
+    return PRODUCTS;
+  } catch (e) {
+    console.error("No se pudo cargar la planilla:", e);
+    PRODUCTS = [];
+    return [];
+  }
+}
+
+/* =========================================================
+   RENDER: categorías (grilla del home + footer)
+   ========================================================= */
+function renderCategories() {
+  const grid = $("#catsGrid");
+  if (grid) {
+    grid.innerHTML = CATEGORIES.map(
+      (c) => `
+      <a href="productos.html?rubro=${c.id}" class="cat">
+        <span class="cat__ico">${ICONS[c.id]}</span>
+        <span class="cat__body">
+          <span class="cat__name">${c.name}</span>
+          <span class="cat__link">Ver todo
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </span>
+      </a>`
+    ).join("");
+  }
+
+  const fc = $("#footerCats");
+  if (fc) {
+    fc.innerHTML = CATEGORIES.map(
+      (c) => `<li><a href="productos.html?rubro=${c.id}">${c.name}</a></li>`
+    ).join("");
+  }
+}
+
+/* =========================================================
+   RENDER: productos (página productos.html)
+   ========================================================= */
+function productCard(p) {
+  return `
     <article class="card">
       <div class="card__media">
-        ${p.tag ? `<span class="card__tag">${p.tag}</span>` : ""}
         <button class="card__fav" aria-label="Agregar a favoritos">${HEART}</button>
         ${PLACEHOLDER_ICON}
       </div>
       <div class="card__body">
-        <span class="card__cat">${p.cat}</span>
+        <span class="card__cat">${p.catName}</span>
         <h3 class="card__name">${p.name}</h3>
         <span class="card__price">${formatPrice(p.price)}</span>
-        <button class="card__cta" data-add="${i}">
-          ${CART_ADD} Agregar
-        </button>
+        <button class="card__cta" data-add="${p.id}">${CART_ADD} Agregar</button>
       </div>
-    </article>`
-  ).join("");
-
-  // un solo listener para toda la grilla (delegación)
-  grid.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-add]");
-    if (btn) Cart.add(Number(btn.dataset.add));
-  });
+    </article>`;
 }
 
-/* --------- RENDER: franja de confianza ---------- */
+function renderProducts(filterCat) {
+  const grid = $("#productsGrid");
+  if (!grid) return;
+  const list = filterCat ? PRODUCTS.filter((p) => p.cat === filterCat) : PRODUCTS;
+
+  if (list.length === 0) {
+    grid.innerHTML = `<p class="empty-msg">No hay productos para mostrar todavía.<br>Escribinos por WhatsApp y te ayudamos 😊</p>`;
+    return;
+  }
+  grid.innerHTML = list.map(productCard).join("");
+}
+
+/* Barra de filtros por rubro (chips) + título de la página */
+function setupProductsPage(activeCat) {
+  const title = $("#productsTitle");
+  if (title) title.textContent = activeCat ? catName(activeCat) : "Todos los productos";
+
+  const sub = $("#productsSub");
+  if (sub) {
+    const n = (activeCat ? PRODUCTS.filter((p) => p.cat === activeCat) : PRODUCTS).length;
+    sub.textContent = n === 1 ? "1 producto" : `${n} productos`;
+  }
+
+  const bar = $("#catFilter");
+  if (bar) {
+    const chip = (id, name) =>
+      `<a href="${id ? "productos.html?rubro=" + id : "productos.html"}" class="chip${
+        (activeCat || "") === (id || "") ? " is-active" : ""
+      }">${name}</a>`;
+    bar.innerHTML = chip("", "Todos") + CATEGORIES.map((c) => chip(c.id, c.name)).join("");
+  }
+}
+
+/* =========================================================
+   RENDER: franja de confianza
+   ========================================================= */
 const TRUST = [
   { ico: '<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg>', txt: "Productos confiables" },
   { ico: '<svg viewBox="0 0 24 24"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17.5" cy="17" r="1.6"/></svg>', txt: "Envíos a todo el país" },
@@ -112,41 +192,44 @@ const TRUST = [
   { ico: '<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>', txt: "Compra 100% segura" },
 ];
 function renderTrust() {
-  $("#trustRow").innerHTML = TRUST.map(
-    (t) => `<li class="trust__item"><span class="trust__ico">${t.ico}</span><span class="trust__txt">${t.txt}</span></li>`
-  ).join("");
+  const row = $("#trustRow");
+  if (row)
+    row.innerHTML = TRUST.map(
+      (t) => `<li class="trust__item"><span class="trust__ico">${t.ico}</span><span class="trust__txt">${t.txt}</span></li>`
+    ).join("");
 }
 
 /* --------- MENÚ MOBILE (drawer) ---------- */
 function setupDrawer() {
   const drawer = $("#drawer");
+  if (!drawer) return;
   const open = () => { drawer.hidden = false; document.body.style.overflow = "hidden"; };
   const close = () => { drawer.hidden = true; document.body.style.overflow = ""; };
-
-  // copia los links de la nav al drawer
   $("#drawerNav").innerHTML = $("#nav").innerHTML;
-
   $("#menuBtn").addEventListener("click", open);
   $("#drawerClose").addEventListener("click", close);
   $("#drawerBackdrop").addEventListener("click", close);
   $("#drawerNav").addEventListener("click", (e) => { if (e.target.closest("a")) close(); });
 }
 
-/* --------- LINKS DE WHATSAPP fijos ---------- */
-function setupWhatsApp() {
+/* --------- LINKS DE WHATSAPP / INSTAGRAM fijos ---------- */
+function setupLinks() {
   const general = waLink("¡Hola La Pañalera! Quería hacerles una consulta 😊");
-  $("#waFloat").href = general;
-  $("#footerWa").href = general;
-  const tw = $("#topbarWa");
-  if (tw) tw.href = general;
-  const fwi = $("#footerWaIcon");
-  if (fwi) fwi.href = general;
+  ["#waFloat", "#footerWa", "#topbarWa", "#footerWaIcon", "#navWa"].forEach((sel) => {
+    const el = $(sel);
+    if (el) el.href = general;
+  });
+  ["#navIg", "#footerIg", "#footerIgIcon", "#topbarIg"].forEach((sel) => {
+    const el = $(sel);
+    if (el) el.href = INSTAGRAM;
+  });
 }
 
 /* --------- AVISO FLOTANTE (toast) ---------- */
 let toastTimer;
 function showToast(text) {
   const el = $("#toast");
+  if (!el) return;
   el.textContent = text;
   el.hidden = false;
   el.classList.add("is-on");
@@ -158,8 +241,7 @@ function showToast(text) {
 }
 
 /* =========================================================
-   CARRITO
-   Guarda en localStorage. Cada ítem: { i, name, cat, price, qty }
+   CARRITO — guarda en localStorage. Ítem: { id, name, cat, price, qty }
    ========================================================= */
 const Cart = {
   KEY: "lp_cart",
@@ -171,22 +253,22 @@ const Cart = {
   },
   save() { localStorage.setItem(this.KEY, JSON.stringify(this.items)); },
 
-  add(index) {
-    const p = PRODUCTS[index];
+  add(id) {
+    const p = PRODUCTS.find((x) => x.id === id);
     if (!p) return;
-    const found = this.items.find((it) => it.i === index);
+    const found = this.items.find((it) => it.id === id);
     if (found) found.qty++;
-    else this.items.push({ i: index, name: p.name, cat: p.cat, price: p.price, qty: 1 });
+    else this.items.push({ id: p.id, name: p.name, cat: p.catName, price: p.price, qty: 1 });
     this.save();
     this.render();
     this.pulse();
     showToast(`"${p.name}" agregado al carrito`);
   },
-  setQty(index, qty) {
-    const it = this.items.find((x) => x.i === index);
+  setQty(id, qty) {
+    const it = this.items.find((x) => x.id === id);
     if (!it) return;
     it.qty = qty;
-    if (it.qty <= 0) this.items = this.items.filter((x) => x.i !== index);
+    if (it.qty <= 0) this.items = this.items.filter((x) => x.id !== id);
     this.save();
     this.render();
   },
@@ -194,28 +276,28 @@ const Cart = {
 
   count() { return this.items.reduce((s, it) => s + it.qty, 0); },
   total() { return this.items.reduce((s, it) => s + it.price * it.qty, 0); },
+  qtyOf(id) { const it = this.items.find((x) => x.id === id); return it ? it.qty : 0; },
 
   pulse() {
     const b = $("#cartBtn");
     if (!b) return;
     b.classList.remove("pulse");
-    void b.offsetWidth; // reinicia la animación
+    void b.offsetWidth;
     b.classList.add("pulse");
   },
 
   render() {
-    // badges
     const n = this.count();
-    [["#cartCount"], ["#cartCountNav"]].forEach(([sel]) => {
+    ["#cartCount", "#cartCountNav"].forEach((sel) => {
       const el = $(sel);
       if (!el) return;
       el.textContent = n;
       el.hidden = n === 0;
     });
 
-    // cuerpo del panel
     const body = $("#cartBody");
     const foot = $("#cartFoot");
+    if (!body) return;
     if (this.items.length === 0) {
       body.innerHTML = `
         <div class="cart__empty">
@@ -223,9 +305,9 @@ const Cart = {
           <p>Tu carrito está vacío.</p>
           <span>Sumá productos y los consultás todos juntos por WhatsApp.</span>
         </div>`;
-      foot.style.display = "none";
+      if (foot) foot.style.display = "none";
     } else {
-      foot.style.display = "";
+      if (foot) foot.style.display = "";
       body.innerHTML = this.items.map((it) => `
         <div class="cart-item">
           <div class="cart-item__info">
@@ -235,11 +317,11 @@ const Cart = {
           </div>
           <div class="cart-item__right">
             <div class="stepper">
-              <button data-dec="${it.i}" aria-label="Quitar uno">−</button>
+              <button data-dec="${it.id}" aria-label="Quitar uno">−</button>
               <span>${it.qty}</span>
-              <button data-inc="${it.i}" aria-label="Agregar uno">+</button>
+              <button data-inc="${it.id}" aria-label="Agregar uno">+</button>
             </div>
-            <button class="cart-item__del" data-del="${it.i}" aria-label="Eliminar">${TRASH}</button>
+            <button class="cart-item__del" data-del="${it.id}" aria-label="Eliminar">${TRASH}</button>
           </div>
         </div>`
       ).join("");
@@ -263,35 +345,45 @@ const Cart = {
   init() {
     this.load();
     this.render();
-
-    $("#cartBtn").addEventListener("click", () => this.open());
-    $("#cartBtnNav").addEventListener("click", (e) => { e.preventDefault(); this.open(); });
-    $("#cartClose").addEventListener("click", () => this.close());
-    $("#cartBackdrop").addEventListener("click", () => this.close());
-    $("#cartClear").addEventListener("click", () => this.clear());
-
-    // +/- y eliminar (delegación dentro del panel)
-    $("#cartBody").addEventListener("click", (e) => {
+    const on = (sel, ev, fn) => { const el = $(sel); if (el) el.addEventListener(ev, fn); };
+    on("#cartBtn", "click", () => this.open());
+    on("#cartBtnNav", "click", (e) => { e.preventDefault(); this.open(); });
+    on("#cartClose", "click", () => this.close());
+    on("#cartBackdrop", "click", () => this.close());
+    on("#cartClear", "click", () => this.clear());
+    on("#cartBody", "click", (e) => {
       const inc = e.target.closest("[data-inc]");
       const dec = e.target.closest("[data-dec]");
       const del = e.target.closest("[data-del]");
-      if (inc) { const i = Number(inc.dataset.inc); this.setQty(i, this.qtyOf(i) + 1); }
-      if (dec) { const i = Number(dec.dataset.dec); this.setQty(i, this.qtyOf(i) - 1); }
-      if (del) this.setQty(Number(del.dataset.del), 0);
+      if (inc) this.setQty(inc.dataset.inc, this.qtyOf(inc.dataset.inc) + 1);
+      if (dec) this.setQty(dec.dataset.dec, this.qtyOf(dec.dataset.dec) - 1);
+      if (del) this.setQty(del.dataset.del, 0);
     });
   },
-  qtyOf(i) { const it = this.items.find((x) => x.i === i); return it ? it.qty : 0; },
 };
 
-const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>';
-
 /* --------- INIT ---------- */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   renderCategories();
-  renderProducts();
   renderTrust();
   setupDrawer();
-  setupWhatsApp();
+  setupLinks();
   Cart.init();
-  $("#year").textContent = new Date().getFullYear();
+  const y = $("#year");
+  if (y) y.textContent = new Date().getFullYear();
+
+  // Página de productos
+  const grid = $("#productsGrid");
+  if (grid) {
+    grid.innerHTML = `<p class="empty-msg">Cargando productos…</p>`;
+    const rubro = norm(new URLSearchParams(location.search).get("rubro") || "");
+    await loadProducts();
+    renderProducts(rubro || null);
+    setupProductsPage(rubro || null);
+    // agregar al carrito (delegación)
+    grid.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-add]");
+      if (btn) Cart.add(btn.dataset.add);
+    });
+  }
 });

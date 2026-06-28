@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>La Pañalera — Todo lo que tu bebé necesita</title>
-  <meta name="description" content="La Pañalera: pañales, alimentación, accesorios, higiene, ropa y juguetes para tu bebé. Productos seleccionados con amor. Envíos a todo el país." />
+  <title>Productos — La Pañalera</title>
+  <meta name="description" content="Catálogo de productos de La Pañalera: pañales, alimentación, accesorios, higiene, ropa y juguetes. Consultá y comprá por WhatsApp." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,7 +45,7 @@
       </a>
 
       <nav class="nav" id="nav">
-        <a href="index.html" class="nav__link is-active">Inicio</a>
+        <a href="index.html" class="nav__link">Inicio</a>
         <a href="productos.html?rubro=panales" class="nav__link">Pañales</a>
         <a href="productos.html?rubro=accesorios" class="nav__link">Accesorios</a>
         <a href="productos.html?rubro=higiene" class="nav__link">Higiene</a>
@@ -113,58 +113,15 @@
   <!-- Aviso flotante -->
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <main>
-    <!-- ===================== HERO ===================== -->
-    <section class="hero">
-      <div class="container hero__inner">
-        <picture class="hero__pic">
-          <source media="(max-width: 991px)" srcset="assets/hero-mobile.jpeg" />
-          <img class="hero__photo" src="assets/hero.jpeg" alt="Canasta con productos para bebé: pañales, mamadera, osito de peluche, mantita y accesorios" />
-        </picture>
-        <div class="hero__scrim" aria-hidden="true"></div>
-        <div class="hero__content">
-          <span class="pill">Todo lo que tu bebé necesita</span>
-          <h1 class="hero__title">
-            Cuidado, amor<br />y tranquilidad<br />
-            <span class="hero__title-accent">en cada etapa.</span>
-          </h1>
-          <p class="hero__text">
-            Productos seleccionados con amor para acompañarte
-            vos y a tu bebé todos los días.
-          </p>
-          <a href="productos.html" class="btn btn--primary hero__cta">
-            Ver productos
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-
-          <!-- confianza (visible en desktop dentro del hero) -->
-          <ul class="hero__trust">
-            <li><span class="hero__trust-ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg></span> Productos confiables</li>
-            <li><span class="hero__trust-ico"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17.5" cy="17" r="1.6"/></svg></span> Envíos a todo el país</li>
-            <li><span class="hero__trust-ico"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c-1 4-7 9-7 9z"/></svg></span> Atención personalizada</li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ===================== CATEGORÍAS ===================== -->
-    <section class="cats" id="categorias" aria-label="Categorías">
+  <main class="page">
+    <section class="catalog">
       <div class="container">
-        <div class="cats__card">
-          <div class="cats__grid" id="catsGrid"><!-- render por JS --></div>
-          <a href="productos.html" class="btn btn--soft cats__all">
-            Ver todas las categorías
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
+        <div class="catalog__head">
+          <h1 class="section-title" id="productsTitle">Todos los productos</h1>
+          <p class="section-sub" id="productsSub"></p>
         </div>
-      </div>
-    </section>
-
-    <!-- ===================== FRANJA DE CONFIANZA / PROMOS ===================== -->
-    <section class="trust" aria-label="Por qué comprarnos">
-      <div class="container">
-        <ul class="trust__row" id="trustRow"><!-- render por JS --></ul>
+        <nav class="catfilter" id="catFilter" aria-label="Filtrar por rubro"><!-- chips por JS --></nav>
+        <div class="products__grid" id="productsGrid"><!-- render por JS --></div>
       </div>
     </section>
   </main>
@@ -206,11 +163,11 @@
 
   <!-- ===================== BOTTOM NAV (mobile) ===================== -->
   <nav class="bottomnav" aria-label="Navegación principal">
-    <a href="#" class="bottomnav__item is-active">
+    <a href="index.html" class="bottomnav__item">
       <svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg>
       <span>Inicio</span>
     </a>
-    <a href="#categorias" class="bottomnav__item">
+    <a href="index.html#categorias" class="bottomnav__item">
       <svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>
       <span>Categorías</span>
     </a>

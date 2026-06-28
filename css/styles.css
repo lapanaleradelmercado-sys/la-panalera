@@ -382,6 +382,27 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
 .card__cta:hover { background: var(--accent); color: #fff; }
 
 /* =========================================================
+   PÁGINA DE PRODUCTOS (productos.html)
+   ========================================================= */
+.catalog { padding: 24px 0 40px; }
+.catalog__head { text-align: center; margin-bottom: 16px; }
+.catalog__head .section-title { font-size: clamp(24px, 7vw, 34px); }
+.catfilter {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 24px;
+}
+.chip {
+  padding: 8px 16px; border-radius: 999px; background: var(--white);
+  border: 1.5px solid var(--line); font-size: 13px; font-weight: 600; color: var(--ink);
+  transition: background .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease);
+}
+.chip:hover { border-color: var(--accent-soft); color: var(--accent-dark); }
+.chip.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.empty-msg {
+  grid-column: 1 / -1; text-align: center; color: var(--ink-soft);
+  padding: 48px 16px; font-size: 15px; line-height: 1.7;
+}
+
+/* =========================================================
    FRANJA DE CONFIANZA
    ========================================================= */
 .trust { padding: 8px 0 30px; }

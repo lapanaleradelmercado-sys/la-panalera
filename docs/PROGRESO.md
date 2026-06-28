@@ -5,29 +5,24 @@ Catálogo web para tienda de artículos de bebé (Mendoza). Mobile-first, contac
 ## Estructura de archivos
 ```
 sitio/
-├── index.html          ← única página (la home)
+├── index.html          ← home (hero + categorías + confianza)
+├── productos.html      ← catálogo (todos / filtrado por rubro con ?rubro=)
 ├── css/styles.css      ← TODO el diseño. Variables de color en :root (arriba del todo)
-├── js/main.js          ← datos editables (WhatsApp, categorías, productos) + lógica
-├── assets/logo.jpeg    ← logo original del cliente (respaldo)
-└── docs/
-    ├── PROGRESO.md      ← este archivo
-    ├── ref-mobile.jpeg  ← mockup de referencia (mobile)
-    └── ref-desktop.jpeg ← mockup de referencia (desktop)
+├── js/main.js          ← config + carga de planilla + carrito + render
+├── assets/             ← logo, hero, íconos de rubros (icons/)
+└── docs/               ← PROGRESO.md + mockups de referencia
 ```
 
 ## Cómo editar lo más común
 
-**Cambiar el número de WhatsApp:**
-`js/main.js` → arriba de todo → `const WHATSAPP = "5492612512059";`
-(código país + área + número, sin "+", sin espacios ni guiones).
+**Cambiar el número de WhatsApp:** `js/main.js` → `const WHATSAPP = "5492612512059";`
 
-**Agregar / cambiar un producto:**
-`js/main.js` → lista `PRODUCTS`. Cada producto es:
-`{ name: "Nombre", cat: "Categoría", price: 12990, tag: "Oferta" }`
-(`tag` es opcional). El precio se formatea solo a "$12.990".
+**Agregar / cambiar productos:** se editan en la **planilla de Google** (NO en el código).
+Hoja PRODUCTOS, columnas A-ID, B-NOMBRE, C-RUBRO, D-PRECIO. El sitio la lee sola.
+El RUBRO tiene que ser uno de: PAÑALES, ALIMENTACION, ACCESORIOS, HIGIENE, ROPA, JUGUETES
+(no importan mayúsculas ni acentos). La URL de la planilla está en `js/main.js` (`SHEET_CSV`).
 
-**Cambiar colores:**
-`css/styles.css` → bloque `:root` (acento coral = `--accent`, azul marca = `--brand`).
+**Cambiar colores:** `css/styles.css` → bloque `:root` (acento coral = `--accent`).
 
 ## Estado actual (2026-06-27)
 - [x] Home completa replicando los mockups, mobile + desktop.
@@ -46,8 +41,17 @@ sitio/
 - Repo: https://github.com/lapanaleradelmercado-sys/la-panalera
 - Sitio en vivo: https://lapanaleradelmercado-sys.github.io/la-panalera/
 
+## Estado actual (2026-06-28)
+- [x] Productos en **página aparte** (`productos.html`). "Ver productos" abre todos;
+      tocar una categoría abre solo ese rubro (`productos.html?rubro=panales`).
+- [x] Productos cargados desde la **planilla de Google** (hoja PRODUCTOS) en vivo.
+- [x] Filtro por rubro con chips arriba de la grilla.
+- [x] Barra inferior: Favoritos→**WhatsApp**, Mi cuenta→**Instagram**.
+
 ## Pendientes
-- [ ] Cargar **catálogo real** de productos (con fotos y precios reales).
+- [ ] Agregar **columna de imagen** a la planilla y mostrar la foto del producto
+      (hoy se ve un ícono placeholder porque la planilla no trae foto).
+- [ ] Más productos reales en la planilla.
 
 ## Notas de diseño
 - **Íconos de rubros:** imágenes reales del cliente en `assets/icons/` (recortadas de
@@ -69,6 +73,8 @@ sitio/
 
 ## Decisiones
 - HTML/CSS/JS vanilla, sin frameworks (fácil de mantener).
-- Íconos SVG de línea, no emojis. Logo = imagen real del cliente (no SVG recreado).
-- Datos de productos/categorías en arrays JS (placeholder hasta tener base de datos).
-- Carrito client-side (sin backend): junta el pedido y se cierra por WhatsApp.
+- Logo e íconos de rubros = imágenes reales del cliente.
+- **Productos desde Google Sheets publicada como CSV** (CMS sin backend). El sitio
+  hace `fetch` del CSV y arma las cards; agregar productos = editar la planilla.
+- Carrito client-side (localStorage): junta el pedido y se cierra por WhatsApp.
+- Sitio multi-página: `index.html` (home) + `productos.html` (catálogo con ?rubro=).
