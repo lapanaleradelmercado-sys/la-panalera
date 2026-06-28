@@ -62,6 +62,17 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - [x] Fotos de productos desde la hoja **info** (link de Drive → imagen). Falta hacer
       públicos los archivos en Drive para que se vean.
 
+## Ajustes 2026-06-28 (noche 4)
+- [x] **Logo sticker**: `assets/logo-sticker.png` (borde blanco die-cut, generado con PIL)
+      + `filter: drop-shadow` para efecto relieve. Se usa en header y footer (el favicon
+      sigue con `logo.png`).
+- [x] **Hero mobile** en 2 columnas: texto a la izquierda y la **canasta más chica a la
+      derecha** (recorte `assets/hero-basket.jpeg`, `object-fit: contain`). Desktop sigue
+      con `hero.jpeg` full-bleed.
+- [x] Badge y botón del hero **más chicos** (menos espacio vacío); bajada del hero más oscura.
+- [x] **Rayitas** con **bordes explícitos** (antes era el truco del gap de 1px que se veía
+      borroso/no conectaba en el celu). Ahora conectan vertical+horizontal. Color `--divider`.
+
 ## Ajustes 2026-06-28 (noche 3)
 - [x] Hero como el mockup: **compacto**, canasta **a la derecha** del texto (no abajo).
       Mobile y desktop usan `hero.jpeg` (la ancha) con `cover`; en mobile `object-position`

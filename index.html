@@ -41,7 +41,7 @@
       </button>
 
       <a href="index.html" class="logo" aria-label="La Pañalera — inicio">
-        <img class="logo__img" src="assets/logo.png" alt="La Pañalera" width="1052" height="1052" />
+        <img class="logo__img" src="assets/logo-sticker.png" alt="La Pañalera" width="1052" height="1052" />
       </a>
 
       <nav class="nav" id="nav">
@@ -109,7 +109,10 @@
     <!-- ===================== HERO ===================== -->
     <section class="hero">
       <div class="container hero__inner">
-        <img class="hero__photo" src="assets/hero.jpeg" alt="Canasta con productos para bebé: pañales, mamadera, osito de peluche, mantita y accesorios" />
+        <picture class="hero__pic">
+          <source media="(max-width: 991px)" srcset="assets/hero-basket.jpeg" />
+          <img class="hero__photo" src="assets/hero.jpeg" alt="Canasta con productos para bebé: pañales, mamadera, osito de peluche, mantita y accesorios" />
+        </picture>
         <div class="hero__scrim" aria-hidden="true"></div>
         <div class="hero__content">
           <span class="pill">Todo lo que tu bebé necesita</span>
@@ -163,7 +166,7 @@
     <div class="container footer__inner">
       <div class="footer__brand">
         <span class="logo logo--footer">
-          <img class="logo__img" src="assets/logo.png" alt="La Pañalera" width="1052" height="1052" />
+          <img class="logo__img" src="assets/logo-sticker.png" alt="La Pañalera" width="1052" height="1052" />
         </span>
         <p>Todo lo que tu bebé necesita, seleccionado con amor. Mendoza, Argentina.</p>
       </div>
