@@ -109,11 +109,13 @@ async function loadProducts() {
       fetchSheet(SHEET_IMAGENES).catch(() => []), // si la hoja de imágenes falla, seguimos sin fotos
     ]);
 
-    // mapa de imágenes por ID
-    const imgById = {};
+    // mapas por ID desde la hoja "info" (C=IMAGEN, D=OFERTA opcional a futuro)
+    const imgById = {}, ofertaById = {};
     imgRows.forEach((r) => {
       const id = (r[0] || "").trim();
-      if (id) imgById[id] = imageUrl(r[2]);
+      if (!id) return;
+      imgById[id] = imageUrl(r[2]);
+      ofertaById[id] = isOferta(r[3]);
     });
 
     PRODUCTS = prodRows
@@ -127,6 +129,7 @@ async function loadProducts() {
           catName: catName(cat),
           price: Number(String(r[3] || "").replace(/[^\d]/g, "")) || 0,
           img: imgById[id] || "",
+          oferta: ofertaById[id] || false,
         };
       })
       .filter((p) => p.name);
@@ -192,7 +195,6 @@ function productCard(p) {
     <article class="card" data-id="${p.id}">
       <div class="card__media">
         ${p.img ? `<img class="card__photo" src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.remove()" />` : ""}
-        <button class="card__fav" aria-label="Agregar a favoritos">${HEART}</button>
         ${PLACEHOLDER_ICON}
       </div>
       <div class="card__body">
@@ -322,7 +324,6 @@ const Cart = {
     this.save();
     this.render();
     this.pulse();
-    showToast(`"${p.name}" agregado al carrito`);
   },
   setQty(id, qty) {
     const it = this.items.find((x) => x.id === id);
@@ -434,6 +435,47 @@ function setupSearchButton() {
   });
 }
 
+/* --------- OFERTAS ---------- */
+// ¿la celda OFERTA está marcada? (acepta si, sí, x, 1, true, oferta)
+function isOferta(v) {
+  return /^(s[ií]|x|1|true|verdadero|oferta)$/i.test((v || "").toString().trim());
+}
+// muestra/oculta el link "Ofertas" del menú según haya productos en oferta
+function updateOffersNav() {
+  const any = PRODUCTS.some((p) => p.oferta);
+  document.querySelectorAll(".nav__link--ofertas").forEach((el) => { el.hidden = !any; });
+  const dn = $("#drawerNav"), nav = $("#nav");
+  if (dn && nav) dn.innerHTML = nav.innerHTML; // re-sincroniza el menú lateral
+}
+
+/* --------- LIGHTBOX (ampliar imagen) ---------- */
+function openLightbox(src, alt) {
+  let lb = $("#lightbox");
+  if (!lb) {
+    lb = document.createElement("div");
+    lb.id = "lightbox";
+    lb.className = "lightbox";
+    lb.innerHTML = `<img alt="" />`;
+    lb.addEventListener("click", closeLightbox);
+    document.body.appendChild(lb);
+  }
+  const big = src.replace(/sz=w\d+/, "sz=w1600"); // versión más grande si es de Drive
+  const img = lb.querySelector("img");
+  img.src = big;
+  img.alt = alt || "";
+  lb.hidden = false;
+  document.body.style.overflow = "hidden";
+  requestAnimationFrame(() => lb.classList.add("is-on"));
+}
+function closeLightbox() {
+  const lb = $("#lightbox");
+  if (!lb) return;
+  lb.classList.remove("is-on");
+  document.body.style.overflow = "";
+  setTimeout(() => { lb.hidden = true; }, 200);
+}
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
+
 /* --------- INIT ---------- */
 document.addEventListener("DOMContentLoaded", async () => {
   renderCategories();
@@ -445,17 +487,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   const y = $("#year");
   if (y) y.textContent = new Date().getFullYear();
 
-  // Página de productos
   const grid = $("#productsGrid");
-  if (grid) {
-    grid.innerHTML = `<p class="empty-msg">Cargando productos…</p>`;
-    const rubro = norm(new URLSearchParams(location.search).get("rubro") || "");
-    setupProductsPage(rubro || null);
-    await loadProducts();
-    renderProducts(currentRubro, "");
+  if (grid) grid.innerHTML = `<p class="empty-msg">Cargando productos…</p>`;
 
-    // clicks en las cards: agregar / +/− / eliminar (delegación)
+  const rubro = norm(new URLSearchParams(location.search).get("rubro") || "");
+  if (grid) setupProductsPage(rubro || null);
+
+  // se cargan los productos en todas las páginas (para mostrarlos y para saber si hay ofertas)
+  await loadProducts();
+  updateOffersNav();
+
+  if (grid) {
+    renderProducts(currentRubro, "");
     grid.addEventListener("click", (e) => {
+      const photo = e.target.closest(".card__photo");
+      if (photo) { openLightbox(photo.src, photo.alt); return; }
       const add = e.target.closest("[data-add]");
       const inc = e.target.closest("[data-inc]");
       const dec = e.target.closest("[data-dec]");

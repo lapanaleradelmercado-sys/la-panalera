@@ -123,8 +123,9 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
 .header__menu svg { width: 26px; height: 26px; }
 
 .logo { display: inline-flex; align-items: center; }
-.logo__img { width: 58px; height: 58px; object-fit: contain; }
-.logo--footer .logo__img { width: 84px; height: 84px; }
+/* logo más grande que su caja (márgenes negativos) para que se lea sin agrandar el header */
+.logo__img { width: 80px; height: 80px; object-fit: contain; margin: -12px 0; }
+.logo--footer .logo__img { width: 84px; height: 84px; margin: 0; }
 
 .nav { display: none; }
 .nav__link {
@@ -265,31 +266,46 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 
 /* =========================================================
+   LIGHTBOX (ampliar imagen)
+   ========================================================= */
+.lightbox {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+  background: rgba(20, 28, 46, .88); padding: 24px; cursor: zoom-out;
+  opacity: 0; transition: opacity .2s var(--ease);
+}
+.lightbox.is-on { opacity: 1; }
+.lightbox img {
+  max-width: 100%; max-height: 100%; border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+}
+
+/* =========================================================
    HERO
    ========================================================= */
 .hero { padding: 14px 0 8px; }
 .hero__inner {
   background: linear-gradient(135deg, var(--peach-50) 0%, var(--peach-100) 100%);
   border-radius: var(--radius-lg);
-  padding: 30px 22px;
+  padding: 22px 20px;
   position: relative;
   overflow: hidden;
-  min-height: 420px;
+  min-height: 320px;
   display: flex;
   align-items: center;
 }
-.hero__content { position: relative; z-index: 2; max-width: 60%; }
+.hero__content { position: relative; z-index: 2; max-width: 57%; }
 .pill {
   display: inline-block; background: var(--peach-200); color: var(--accent-dark);
-  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  padding: 7px 14px; border-radius: 999px; margin-bottom: 16px;
+  font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  padding: 6px 12px; border-radius: 999px; margin-bottom: 11px;
 }
 .hero__title {
-  font-size: clamp(26px, 7.2vw, 40px); font-weight: 800; line-height: 1.14;
-  letter-spacing: -.02em; margin-bottom: 14px;
+  font-size: clamp(22px, 6.6vw, 40px); font-weight: 800; line-height: 1.12;
+  letter-spacing: -.02em; margin-bottom: 10px;
 }
 .hero__title-accent { color: var(--accent); }
-.hero__text { color: var(--ink-soft); font-size: 15px; max-width: 30ch; margin-bottom: 22px; }
+.hero__text { color: var(--ink-soft); font-size: 13px; max-width: 26ch; margin-bottom: 16px; }
+.hero__cta { padding: 11px 20px; font-size: 13.5px; }
 .hero__trust { display: none; }
 
 .btn {
@@ -361,7 +377,7 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
 .card__media { position: relative; aspect-ratio: 1 / 1; background: var(--peach-50); display: grid; place-items: center; }
 .card__media svg { width: 46%; height: 46%; color: var(--accent-soft); }
-.card__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.card__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; cursor: zoom-in; }
 .card__tag {
   position: absolute; top: 10px; left: 10px; background: var(--accent); color: #fff;
   font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
@@ -496,7 +512,7 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
   /* header horizontal */
   .header__inner { min-height: 84px; gap: 24px; }
   .header__menu { display: none; }
-  .logo__img { width: 72px; height: 72px; }
+  .logo__img { width: 104px; height: 104px; margin: -18px 0; }
   .nav { display: flex; align-items: center; gap: 26px; flex: 1; }
   .nav__link { font-size: 14px; text-transform: uppercase; letter-spacing: .02em; }
   .iconbtn--search, .header__user { display: inline-flex; }
@@ -511,6 +527,7 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
   .hero__content { max-width: 520px; order: 0; }
   .hero__title { font-size: 56px; }
   .hero__text { font-size: 17px; max-width: 38ch; }
+  .hero__cta { padding: 15px 28px; font-size: 16px; }
   .hero__trust {
     display: flex; flex-wrap: wrap; gap: 14px 26px; margin-top: 26px;
   }

@@ -59,6 +59,18 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - [x] Nombres de productos en **Title Case** (`titleCase` en main.js).
 - [x] Cards con **contador +/−, subtotal y tacho** (controlan el carrito desde la card;
       sincroniza con el panel del carrito en ambos sentidos).
+- [x] Fotos de productos desde la hoja **info** (link de Drive → imagen). Falta hacer
+      públicos los archivos en Drive para que se vean.
+
+## Ajustes 2026-06-28 (tarde)
+- [x] Saqué el **corazón** de las cards y el **cartel "agregado"** al sumar al carrito.
+- [x] **Lightbox**: tocás la foto de un producto y se ve grande; tocás de nuevo (o Esc) y cierra.
+- [x] **Logo más grande** (se leen mejor las letras) sin agrandar el header (márgenes negativos).
+- [x] **"Ofertas"** se oculta si no hay productos en oferta. Para marcar ofertas: agregar
+      una columna **OFERTA** en la hoja *info* (poné `si`/`x`/`1` en los que estén en oferta).
+      El código ya la lee (`isOferta` en main.js); aparece el menú "Ofertas" solo.
+- [x] **Hero mobile más compacto** (texto/botón más chicos, menos alto) para que la imagen
+      entre mejor atrás, igual que el mockup.
 
 ## Pendientes
 - [ ] **Hacer públicos los archivos de fotos en Google Drive** ("Cualquiera con el enlace").
