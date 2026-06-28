@@ -18,7 +18,7 @@ sitio/
 ## Cómo editar lo más común
 
 **Cambiar el número de WhatsApp:**
-`js/main.js` → arriba de todo → `const WHATSAPP = "5492610000000";`
+`js/main.js` → arriba de todo → `const WHATSAPP = "5492612512059";`
 (código país + área + número, sin "+", sin espacios ni guiones).
 
 **Agregar / cambiar un producto:**
@@ -30,21 +30,29 @@ sitio/
 `css/styles.css` → bloque `:root` (acento coral = `--accent`, azul marca = `--brand`).
 
 ## Estado actual (2026-06-27)
-- [x] Home completa replicando los mockips, mobile + desktop.
+- [x] Home completa replicando los mockups, mobile + desktop.
 - [x] Header responsive (hamburguesa+buscador en mobile / nav completa en desktop).
+- [x] **Logo real** del cliente (PNG con fondo transparente).
 - [x] Hero con ilustración SVG temporal (canasta + osito).
-- [x] Categorías (6), productos de muestra (cards), franja de confianza, footer.
+- [x] Categorías (6), productos de muestra (precios ficticios), confianza, footer.
+- [x] **Número de WhatsApp real** conectado.
+- [x] **Carrito funcional**: agregar, +/−, eliminar, total, guardado en localStorage,
+      checkout que arma el pedido y lo manda por WhatsApp. Badges + toast.
 - [x] Bottom-nav mobile + WhatsApp flotante.
 - [x] Verificado en navegador a 390px y 1440px.
+- [x] **Subido a GitHub** y publicado en GitHub Pages.
+
+## Online
+- Repo: https://github.com/lapanaleradelmercado-sys/la-panalera
+- Sitio en vivo: https://lapanaleradelmercado-sys.github.io/la-panalera/
 
 ## Pendientes
-- [ ] Reemplazar el **número de WhatsApp** real.
 - [ ] Reemplazar la **ilustración del hero** por la foto real (el cliente la pasa limpia).
-- [ ] Cargar **catálogo real** de productos (con fotos).
+- [ ] Cargar **catálogo real** de productos (con fotos y precios reales).
 - [ ] Links reales de Instagram y email en el footer.
-- [ ] Subir a GitHub (desde el editor web).
 
 ## Decisiones
 - HTML/CSS/JS vanilla, sin frameworks (fácil de mantener).
-- Íconos SVG de línea, no emojis. Logo recreado en SVG para que quede nítido.
+- Íconos SVG de línea, no emojis. Logo = imagen real del cliente (no SVG recreado).
 - Datos de productos/categorías en arrays JS (placeholder hasta tener base de datos).
+- Carrito client-side (sin backend): junta el pedido y se cierra por WhatsApp.
