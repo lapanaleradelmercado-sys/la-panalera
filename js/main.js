@@ -53,6 +53,10 @@ const waLink = (text) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(te
 const norm = (s) =>
   (s || "").toString().trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const catName = (id) => (CATEGORIES.find((c) => c.id === id) || {}).name || id;
+// "PAÑALES PAMPERS" -> "Pañales Pampers" (minúscula con inicial de cada palabra en mayúscula)
+const titleCase = (s) =>
+  (s || "").toString().toLowerCase().replace(/(^|\s)([a-záéíóúñü])/gi,
+    (_, sep, ch) => sep + ch.toUpperCase());
 
 /* =========================================================
    CARGA DE PRODUCTOS DESDE LA PLANILLA
@@ -87,7 +91,7 @@ async function loadProducts() {
         const cat = norm(r[2]);
         return {
           id: (r[0] || "").trim(),
-          name: (r[1] || "").trim(),
+          name: titleCase((r[1] || "").trim()),
           cat,
           catName: catName(cat),
           price: Number(String(r[3] || "").replace(/[^\d]/g, "")) || 0,
@@ -133,9 +137,27 @@ function renderCategories() {
 /* =========================================================
    RENDER: productos (página productos.html)
    ========================================================= */
+// control de carrito dentro de la card: "Agregar" o (− cantidad +) + subtotal + tacho
+function cardControl(id) {
+  const p = PRODUCTS.find((x) => x.id === id);
+  if (!p) return "";
+  const q = Cart.qtyOf(id);
+  if (q <= 0) return `<button class="card__cta" data-add="${id}">${CART_ADD} Agregar</button>`;
+  return `
+    <div class="card__cartrow">
+      <div class="stepper">
+        <button data-dec="${id}" aria-label="Quitar uno">−</button>
+        <span>${q}</span>
+        <button data-inc="${id}" aria-label="Agregar uno">+</button>
+      </div>
+      <button class="card__del" data-del="${id}" aria-label="Eliminar del carrito">${TRASH}</button>
+    </div>
+    <div class="card__subtotal">Subtotal: <strong>${formatPrice(q * p.price)}</strong></div>`;
+}
+
 function productCard(p) {
   return `
-    <article class="card">
+    <article class="card" data-id="${p.id}">
       <div class="card__media">
         <button class="card__fav" aria-label="Agregar a favoritos">${HEART}</button>
         ${PLACEHOLDER_ICON}
@@ -144,41 +166,46 @@ function productCard(p) {
         <span class="card__cat">${p.catName}</span>
         <h3 class="card__name">${p.name}</h3>
         <span class="card__price">${formatPrice(p.price)}</span>
-        <button class="card__cta" data-add="${p.id}">${CART_ADD} Agregar</button>
+        <div class="card__control">${cardControl(p.id)}</div>
       </div>
     </article>`;
 }
 
-function renderProducts(filterCat) {
+// actualiza el control de cada card visible según el estado del carrito
+function syncCards() {
+  document.querySelectorAll(".card[data-id]").forEach((card) => {
+    const ctrl = card.querySelector(".card__control");
+    if (ctrl) ctrl.innerHTML = cardControl(card.dataset.id);
+  });
+}
+
+let currentRubro = null;
+
+function renderProducts(filterCat, query) {
   const grid = $("#productsGrid");
   if (!grid) return;
-  const list = filterCat ? PRODUCTS.filter((p) => p.cat === filterCat) : PRODUCTS;
+  let list = filterCat ? PRODUCTS.filter((p) => p.cat === filterCat) : PRODUCTS;
+  const q = norm(query);
+  if (q) list = list.filter((p) => norm(p.name).includes(q));
+
+  const sub = $("#productsSub");
+  if (sub) sub.textContent = list.length === 1 ? "1 producto" : `${list.length} productos`;
 
   if (list.length === 0) {
-    grid.innerHTML = `<p class="empty-msg">No hay productos para mostrar todavía.<br>Escribinos por WhatsApp y te ayudamos 😊</p>`;
+    grid.innerHTML = `<p class="empty-msg">No se encontraron productos.<br>Probá con otro nombre o escribinos por WhatsApp 😊</p>`;
     return;
   }
   grid.innerHTML = list.map(productCard).join("");
 }
 
-/* Barra de filtros por rubro (chips) + título de la página */
 function setupProductsPage(activeCat) {
+  currentRubro = activeCat || null;
   const title = $("#productsTitle");
   if (title) title.textContent = activeCat ? catName(activeCat) : "Todos los productos";
 
-  const sub = $("#productsSub");
-  if (sub) {
-    const n = (activeCat ? PRODUCTS.filter((p) => p.cat === activeCat) : PRODUCTS).length;
-    sub.textContent = n === 1 ? "1 producto" : `${n} productos`;
-  }
-
-  const bar = $("#catFilter");
-  if (bar) {
-    const chip = (id, name) =>
-      `<a href="${id ? "productos.html?rubro=" + id : "productos.html"}" class="chip${
-        (activeCat || "") === (id || "") ? " is-active" : ""
-      }">${name}</a>`;
-    bar.innerHTML = chip("", "Todos") + CATEGORIES.map((c) => chip(c.id, c.name)).join("");
+  const search = $("#productSearch");
+  if (search) {
+    search.addEventListener("input", () => renderProducts(currentRubro, search.value));
   }
 }
 
@@ -328,6 +355,7 @@ const Cart = {
       $("#cartTotal").textContent = formatPrice(this.total());
       $("#cartCheckout").href = this.waMessage();
     }
+    syncCards();
   },
 
   waMessage() {
@@ -362,12 +390,24 @@ const Cart = {
   },
 };
 
+/* --------- BOTÓN LUPA del header ---------- */
+function setupSearchButton() {
+  const btn = $("#searchBtn");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    const inp = $("#productSearch");
+    if (inp) { inp.focus(); inp.scrollIntoView({ behavior: "smooth", block: "center" }); }
+    else location.href = "productos.html";
+  });
+}
+
 /* --------- INIT ---------- */
 document.addEventListener("DOMContentLoaded", async () => {
   renderCategories();
   renderTrust();
   setupDrawer();
   setupLinks();
+  setupSearchButton();
   Cart.init();
   const y = $("#year");
   if (y) y.textContent = new Date().getFullYear();
@@ -377,13 +417,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (grid) {
     grid.innerHTML = `<p class="empty-msg">Cargando productos…</p>`;
     const rubro = norm(new URLSearchParams(location.search).get("rubro") || "");
-    await loadProducts();
-    renderProducts(rubro || null);
     setupProductsPage(rubro || null);
-    // agregar al carrito (delegación)
+    await loadProducts();
+    renderProducts(currentRubro, "");
+
+    // clicks en las cards: agregar / +/− / eliminar (delegación)
     grid.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-add]");
-      if (btn) Cart.add(btn.dataset.add);
+      const add = e.target.closest("[data-add]");
+      const inc = e.target.closest("[data-inc]");
+      const dec = e.target.closest("[data-dec]");
+      const del = e.target.closest("[data-del]");
+      if (add) Cart.add(add.dataset.add);
+      else if (inc) Cart.setQty(inc.dataset.inc, Cart.qtyOf(inc.dataset.inc) + 1);
+      else if (dec) Cart.setQty(dec.dataset.dec, Cart.qtyOf(dec.dataset.dec) - 1);
+      else if (del) Cart.setQty(del.dataset.del, 0);
     });
   }
 });

@@ -42,11 +42,17 @@ El RUBRO tiene que ser uno de: PAÑALES, ALIMENTACION, ACCESORIOS, HIGIENE, ROPA
 - Sitio en vivo: https://lapanaleradelmercado-sys.github.io/la-panalera/
 
 ## Estado actual (2026-06-28)
-- [x] Productos en **página aparte** (`productos.html`). "Ver productos" abre todos;
-      tocar una categoría abre solo ese rubro (`productos.html?rubro=panales`).
-- [x] Productos cargados desde la **planilla de Google** (hoja PRODUCTOS) en vivo.
-- [x] Filtro por rubro con chips arriba de la grilla.
+- [x] Productos en **página aparte** (`productos.html`) desde la **planilla de Google**.
+      "Ver productos" abre todos; categoría abre `productos.html?rubro=panales`.
 - [x] Barra inferior: Favoritos→**WhatsApp**, Mi cuenta→**Instagram**.
+- [x] Buscador: el de arriba quedó como **botón lupa** (mobile reemplaza al carrito, que
+      está en la barra inferior). En `productos.html` hay una **barra de búsqueda grande**
+      que filtra por nombre en vivo. (Antes el buscador era decorativo y no andaba.)
+- [x] Se sacaron los **chips de categorías** de productos.html (se navega por el menú/URL).
+- [x] Se sacó el **botón verde flotante** de WhatsApp (ya está en la barra inferior).
+- [x] Nombres de productos en **Title Case** (`titleCase` en main.js).
+- [x] Cards con **contador +/−, subtotal y tacho** (controlan el carrito desde la card;
+      sincroniza con el panel del carrito en ambos sentidos).
 
 ## Pendientes
 - [ ] Agregar **columna de imagen** a la planilla y mostrar la foto del producto

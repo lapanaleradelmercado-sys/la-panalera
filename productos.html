@@ -56,7 +56,7 @@
       </nav>
 
       <div class="header__actions">
-        <button class="iconbtn iconbtn--search" aria-label="Buscar">
+        <button class="iconbtn iconbtn--search" id="searchBtn" aria-label="Buscar productos">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         </button>
         <button class="iconbtn header__user" aria-label="Mi cuenta">
@@ -67,14 +67,6 @@
           <span class="badge" id="cartCount" hidden>0</span>
         </button>
       </div>
-    </div>
-
-    <!-- Buscador (solo mobile, full width) -->
-    <div class="container searchbar__wrap">
-      <label class="searchbar">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input type="search" name="busqueda" placeholder="¿Qué estás buscando?" aria-label="Buscar productos" />
-      </label>
     </div>
   </header>
 
@@ -120,7 +112,12 @@
           <h1 class="section-title" id="productsTitle">Todos los productos</h1>
           <p class="section-sub" id="productsSub"></p>
         </div>
-        <nav class="catfilter" id="catFilter" aria-label="Filtrar por rubro"><!-- chips por JS --></nav>
+        <div class="catalog__search">
+          <label class="searchbar searchbar--lg">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" id="productSearch" placeholder="Buscar productos por nombre…" aria-label="Buscar productos" />
+          </label>
+        </div>
         <div class="products__grid" id="productsGrid"><!-- render por JS --></div>
       </div>
     </section>
@@ -155,11 +152,6 @@
       <div class="container">© <span id="year"></span> La Pañalera · Hecho con amor en Mendoza</div>
     </div>
   </footer>
-
-  <!-- WhatsApp flotante -->
-  <a href="#" class="wa-float" id="waFloat" aria-label="Escribinos por WhatsApp">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11 19.7L3 29l6.5-1.9A13 13 0 1 0 16 3z" fill="currentColor"/><path d="M12 10c-.5 0-1 .2-1.3.7-.5.6-1 1.5-1 2.8 0 1.7 1.2 3.3 1.4 3.6.2.2 2.4 3.8 6 5.2 3 1.1 3.6.9 4.3.8.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.5.2-1.7-.1-.1-.4-.2-.8-.4l-2.6-1.3c-.4-.1-.6-.2-.9.2l-1.2 1.5c-.2.3-.5.3-.9.1-.4-.2-1.7-.6-3.3-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8l.6-.7c.2-.2.2-.4.4-.7.1-.3 0-.5 0-.7l-1-2.4c-.3-.7-.5-.6-.8-.6z" fill="#fff"/></svg>
-  </a>
 
   <!-- ===================== BOTTOM NAV (mobile) ===================== -->
   <nav class="bottomnav" aria-label="Navegación principal">
