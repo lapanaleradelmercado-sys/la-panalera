@@ -62,6 +62,16 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - [x] Fotos de productos desde la hoja **info** (link de Drive → imagen). Falta hacer
       públicos los archivos en Drive para que se vean.
 
+## Ajustes 2026-06-28 (noche 2)
+- [x] Botón "Ver productos" en **un solo renglón** (`white-space: nowrap`), menos alto.
+- [x] **Sin blur** en el hero (se sacó el backdrop-filter).
+- [x] **Imágenes del hero por dispositivo** (`<picture>`): desktop usa `hero.jpeg` (apaisada,
+      ex "hero 1", `cover`, canasta a la derecha); mobile usa `hero-mobile.jpeg` (vertical,
+      ex "hero 2", `object-fit: contain` con fondo `#fcf3ee` = crema de la foto). Así la
+      canasta queda ENTERA y el texto va arriba, sin quedar debajo de las letras.
+- [x] **Footer celeste pastel** (`--sky-pastel: #d6eef9`, texto navy) y los iconos de
+      WhatsApp/Instagram movidos a la columna **Contacto** (antes estaban sueltos arriba).
+
 ## Ajustes 2026-06-28 (noche)
 - [x] Fotos de productos **funcionando** (cliente hizo públicos los archivos de Drive).
 - [x] **Iconos del cliente** (iconos 1 y 2, gris/coral) en `assets/icons/`: barra inferior
