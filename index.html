@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Pañalera — Todo lo que tu bebé necesita</title>
+  <meta name="description" content="La Pañalera: pañales, alimentación, accesorios, higiene, ropa y juguetes para tu bebé. Productos seleccionados con amor. Envíos a todo el país." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="assets/logo.png" />
+</head>
+<body>
+
+  <!-- ===================== BARRA DE ANUNCIO ===================== -->
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <p class="topbar__msg">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17.5" cy="17" r="1.6"/></svg>
+        Envíos a todo el país a partir de <strong>$15.000</strong>
+      </p>
+      <span class="topbar__sep" aria-hidden="true"></span>
+      <p class="topbar__msg topbar__msg--2">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>
+        3 y 6 cuotas sin interés en compras superiores a <strong>$40.000</strong>
+      </p>
+      <div class="topbar__social">
+        <a href="#" aria-label="Instagram"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="WhatsApp"><svg class="ico" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 19.5l1.1-4A8 8 0 1 1 20 11.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5.6 0 1.2-.6.8-1.2l-1-1.2-1.5.6-1.6-1.6.6-1.5-1.2-1c-.6-.4-1.2.2-1.2.8z" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header">
+    <div class="container header__inner">
+      <button class="header__menu" id="menuBtn" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <a href="#" class="logo" aria-label="La Pañalera — inicio">
+        <img class="logo__img" src="assets/logo.png" alt="La Pañalera" width="1052" height="1052" />
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="#" class="nav__link is-active">Inicio</a>
+        <a href="#cat-panales" class="nav__link">Pañales</a>
+        <a href="#cat-accesorios" class="nav__link">Accesorios</a>
+        <a href="#cat-higiene" class="nav__link">Higiene</a>
+        <a href="#cat-ropa" class="nav__link">Ropa</a>
+        <a href="#cat-alimentacion" class="nav__link">Alimentación</a>
+        <a href="#cat-juguetes" class="nav__link">Juguetes</a>
+        <a href="#ofertas" class="nav__link">Ofertas</a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="iconbtn iconbtn--search" aria-label="Buscar">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+        <button class="iconbtn header__user" aria-label="Mi cuenta">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+        </button>
+        <button class="iconbtn iconbtn--cart" id="cartBtn" aria-label="Carrito">
+          <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/></svg>
+          <span class="badge" id="cartCount" hidden>0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Buscador (solo mobile, full width) -->
+    <div class="container searchbar__wrap">
+      <label class="searchbar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" name="busqueda" placeholder="¿Qué estás buscando?" aria-label="Buscar productos" />
+      </label>
+    </div>
+  </header>
+
+  <!-- Menú lateral mobile -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer__panel">
+      <button class="drawer__close" id="drawerClose" aria-label="Cerrar menú">&times;</button>
+      <nav class="drawer__nav" id="drawerNav"></nav>
+    </div>
+    <div class="drawer__backdrop" id="drawerBackdrop"></div>
+  </div>
+
+  <!-- Carrito (panel lateral) -->
+  <div class="cart" id="cart" hidden>
+    <div class="cart__backdrop" id="cartBackdrop"></div>
+    <aside class="cart__panel" role="dialog" aria-label="Tu carrito">
+      <header class="cart__head">
+        <h2 class="cart__title">Tu carrito</h2>
+        <button class="cart__close" id="cartClose" aria-label="Cerrar carrito">&times;</button>
+      </header>
+      <div class="cart__body" id="cartBody"><!-- render por JS --></div>
+      <footer class="cart__foot" id="cartFoot">
+        <div class="cart__totalrow">
+          <span>Total</span>
+          <strong id="cartTotal">$0</strong>
+        </div>
+        <a class="btn btn--primary cart__checkout" id="cartCheckout" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8 8 0 0 1-11.8 7L4 20l1.4-4.5A8 8 0 1 1 21 11.5z"/></svg>
+          Finalizar pedido por WhatsApp
+        </a>
+        <button class="cart__clear" id="cartClear">Vaciar carrito</button>
+      </footer>
+    </aside>
+  </div>
+
+  <!-- Aviso flotante -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <span class="pill">Todo lo que tu bebé necesita</span>
+          <h1 class="hero__title">
+            Cuidado, amor<br />y tranquilidad<br />
+            <span class="hero__title-accent">en cada etapa.</span>
+          </h1>
+          <p class="hero__text">
+            Productos seleccionados con amor para acompañarte
+            vos y a tu bebé todos los días.
+          </p>
+          <a href="#ofertas" class="btn btn--primary hero__cta">
+            Ver productos
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+
+          <!-- confianza (visible en desktop dentro del hero) -->
+          <ul class="hero__trust">
+            <li><span class="hero__trust-ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg></span> Productos confiables</li>
+            <li><span class="hero__trust-ico"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17.5" cy="17" r="1.6"/></svg></span> Envíos a todo el país</li>
+            <li><span class="hero__trust-ico"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c-1 4-7 9-7 9z"/></svg></span> Atención personalizada</li>
+          </ul>
+        </div>
+
+        <div class="hero__media">
+          <!-- Ilustración SVG temporal: reemplazar por la foto real del osito/canasta -->
+          <div class="hero__art">
+            <svg viewBox="0 0 520 480" role="img" aria-label="Canasta con productos para bebé">
+              <circle cx="300" cy="220" r="185" fill="var(--peach-200)"/>
+              <!-- accesorios decorativos -->
+              <path d="M120 150c2-7 12-7 14 0 2-7 12-7 14 0 0 8-14 16-14 16s-14-8-14-16z" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+              <path d="M95 250l4 8 8 1-6 6 1 8-7-4-7 4 1-8-6-6 8-1z" fill="none" stroke="var(--accent)" stroke-width="2"/>
+              <path d="M470 120c-30 6-30 40-2 44" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+              <path d="M460 300l3 6 6 1-4 5 1 6-6-3-5 3 1-6-5-5 6-1z" fill="var(--accent)" opacity=".55"/>
+
+              <!-- mantitas apiladas -->
+              <g>
+                <rect x="330" y="350" width="150" height="26" rx="8" fill="#fff" stroke="var(--peach-300)" stroke-width="2"/>
+                <rect x="338" y="328" width="150" height="26" rx="8" fill="var(--peach-100)" stroke="var(--peach-300)" stroke-width="2"/>
+                <rect x="330" y="306" width="150" height="26" rx="8" fill="#fff" stroke="var(--peach-300)" stroke-width="2"/>
+                <circle cx="360" cy="319" r="2.4" fill="var(--accent)" opacity=".5"/>
+                <circle cx="392" cy="341" r="2.4" fill="var(--accent)" opacity=".5"/>
+                <circle cx="424" cy="319" r="2.4" fill="var(--accent)" opacity=".5"/>
+              </g>
+
+              <!-- canasta -->
+              <g>
+                <path d="M150 250h230l-20 130a14 14 0 0 1-14 12H184a14 14 0 0 1-14-12z" fill="var(--basket)"/>
+                <path d="M150 250h230l-20 130a14 14 0 0 1-14 12H184a14 14 0 0 1-14-12z" fill="none" stroke="var(--basket-line)" stroke-width="2.5"/>
+                <path d="M170 290h190M176 330h178M182 366h166" fill="none" stroke="var(--basket-line)" stroke-width="2" opacity=".6"/>
+                <ellipse cx="265" cy="250" rx="115" ry="22" fill="var(--basket-rim)"/>
+                <ellipse cx="265" cy="250" rx="115" ry="22" fill="none" stroke="var(--basket-line)" stroke-width="2.5"/>
+                <!-- pompones del borde -->
+                <g fill="var(--basket-rim)" stroke="var(--basket-line)" stroke-width="1.5">
+                  <circle cx="168" cy="262" r="9"/><circle cx="210" cy="270" r="9"/><circle cx="255" cy="272" r="9"/><circle cx="300" cy="270" r="9"/><circle cx="345" cy="262" r="9"/>
+                </g>
+              </g>
+
+              <!-- pañales doblados dentro -->
+              <g>
+                <path d="M205 168c30-14 70-14 100 0l-6 70c-28 10-60 10-88 0z" fill="#fff" stroke="var(--peach-300)" stroke-width="2.5"/>
+                <path d="M214 180c26-10 56-10 82 0" fill="none" stroke="var(--peach-300)" stroke-width="2" opacity=".7"/>
+                <circle cx="232" cy="200" r="2.4" fill="var(--accent)" opacity=".5"/>
+                <circle cx="262" cy="194" r="2.4" fill="var(--accent)" opacity=".5"/>
+                <circle cx="288" cy="202" r="2.4" fill="var(--accent)" opacity=".5"/>
+              </g>
+
+              <!-- mamadera / dispenser -->
+              <g>
+                <rect x="318" y="150" width="34" height="95" rx="14" fill="#fff" stroke="var(--peach-300)" stroke-width="2.5"/>
+                <rect x="328" y="132" width="14" height="22" rx="5" fill="var(--peach-200)" stroke="var(--peach-300)" stroke-width="2"/>
+                <path d="M324 200h22" stroke="var(--peach-300)" stroke-width="2"/>
+              </g>
+
+              <!-- osito de peluche -->
+              <g transform="translate(348 196)">
+                <circle cx="0" cy="-30" r="13" fill="var(--bear)"/>      <!-- oreja izq -->
+                <circle cx="44" cy="-30" r="13" fill="var(--bear)"/>     <!-- oreja der -->
+                <circle cx="0" cy="-30" r="6" fill="var(--bear-dark)"/>
+                <circle cx="44" cy="-30" r="6" fill="var(--bear-dark)"/>
+                <circle cx="22" cy="-18" r="34" fill="var(--bear)"/>     <!-- cabeza -->
+                <ellipse cx="22" cy="-6" rx="17" ry="14" fill="var(--bear-light)"/> <!-- hocico -->
+                <circle cx="12" cy="-22" r="3.4" fill="#5b4636"/>
+                <circle cx="32" cy="-22" r="3.4" fill="#5b4636"/>
+                <ellipse cx="22" cy="-12" rx="4" ry="3" fill="#5b4636"/>
+                <path d="M22 -9c0 5 5 6 8 4M22 -9c0 5-5 6-8 4" fill="none" stroke="#5b4636" stroke-width="1.6"/>
+                <path d="M-8 12c-16 6-16 40 6 44l50 0c20-4 22-34 6-44z" fill="var(--bear)"/>  <!-- cuerpo -->
+                <ellipse cx="22" cy="40" rx="22" ry="16" fill="var(--bear-light)"/>
+              </g>
+
+              <!-- chupete -->
+              <g transform="translate(150 392)">
+                <circle cx="0" cy="0" r="24" fill="none" stroke="var(--accent)" stroke-width="6" opacity=".8"/>
+                <ellipse cx="0" cy="26" rx="22" ry="13" fill="var(--peach-200)" stroke="var(--accent)" stroke-width="3"/>
+                <ellipse cx="0" cy="40" rx="8" ry="10" fill="var(--peach-100)" stroke="var(--accent)" stroke-width="3"/>
+              </g>
+
+              <!-- mordillo de madera -->
+              <g transform="translate(230 408)">
+                <circle cx="0" cy="0" r="22" fill="none" stroke="var(--basket)" stroke-width="9"/>
+                <circle cx="-6" cy="-20" r="6" fill="var(--basket-rim)"/>
+                <circle cx="10" cy="-20" r="6" fill="var(--basket-rim)"/>
+                <circle cx="22" cy="-8" r="6" fill="var(--basket-rim)"/>
+              </g>
+            </svg>
+          </div>
+
+          <!-- dots del carrusel (decorativos por ahora) -->
+          <div class="hero__dots" aria-hidden="true">
+            <span class="is-active"></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CATEGORÍAS ===================== -->
+    <section class="cats" id="categorias" aria-label="Categorías">
+      <div class="container">
+        <div class="cats__card">
+          <div class="cats__grid" id="catsGrid"><!-- render por JS --></div>
+          <a href="#categorias" class="btn btn--soft cats__all">
+            Ver todas las categorías
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PRODUCTOS DESTACADOS ===================== -->
+    <section class="products" id="ofertas" aria-label="Productos destacados">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Productos destacados</h2>
+          <p class="section-sub">Una muestra de cómo se verán las cards. Después cargamos el catálogo real.</p>
+        </div>
+        <div class="products__grid" id="productsGrid"><!-- render por JS --></div>
+      </div>
+    </section>
+
+    <!-- ===================== FRANJA DE CONFIANZA / PROMOS ===================== -->
+    <section class="trust" aria-label="Por qué comprarnos">
+      <div class="container">
+        <ul class="trust__row" id="trustRow"><!-- render por JS --></ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo logo--footer">
+          <img class="logo__img" src="assets/logo.png" alt="La Pañalera" width="1052" height="1052" />
+        </span>
+        <p>Todo lo que tu bebé necesita, seleccionado con amor. Mendoza, Argentina.</p>
+      </div>
+      <div class="footer__col">
+        <h3>Categorías</h3>
+        <ul id="footerCats"></ul>
+      </div>
+      <div class="footer__col">
+        <h3>Contacto</h3>
+        <ul>
+          <li><a href="#" id="footerWa">WhatsApp</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="mailto:hola@lapanalera.com">hola@lapanalera.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© <span id="year"></span> La Pañalera · Hecho con amor en Mendoza</div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp flotante -->
+  <a href="#" class="wa-float" id="waFloat" aria-label="Escribinos por WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11 19.7L3 29l6.5-1.9A13 13 0 1 0 16 3z" fill="currentColor"/><path d="M12 10c-.5 0-1 .2-1.3.7-.5.6-1 1.5-1 2.8 0 1.7 1.2 3.3 1.4 3.6.2.2 2.4 3.8 6 5.2 3 1.1 3.6.9 4.3.8.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.5.2-1.7-.1-.1-.4-.2-.8-.4l-2.6-1.3c-.4-.1-.6-.2-.9.2l-1.2 1.5c-.2.3-.5.3-.9.1-.4-.2-1.7-.6-3.3-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8l.6-.7c.2-.2.2-.4.4-.7.1-.3 0-.5 0-.7l-1-2.4c-.3-.7-.5-.6-.8-.6z" fill="#fff"/></svg>
+  </a>
+
+  <!-- ===================== BOTTOM NAV (mobile) ===================== -->
+  <nav class="bottomnav" aria-label="Navegación principal">
+    <a href="#" class="bottomnav__item is-active">
+      <svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg>
+      <span>Inicio</span>
+    </a>
+    <a href="#categorias" class="bottomnav__item">
+      <svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>
+      <span>Categorías</span>
+    </a>
+    <a href="#" class="bottomnav__item">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c-1 4-7 9-7 9z"/></svg>
+      <span>Favoritos</span>
+    </a>
+    <a href="#" class="bottomnav__item">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+      <span>Mi cuenta</span>
+    </a>
+    <a href="#" class="bottomnav__item" id="cartBtnNav">
+      <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/></svg>
+      <span>Carrito</span>
+      <span class="badge badge--nav" id="cartCountNav" hidden>0</span>
+    </a>
+  </nav>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

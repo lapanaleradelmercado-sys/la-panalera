@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+# editores
+.vscode/
+*.swp
+# nunca subir credenciales
+*.token
+gh_token
+.env
