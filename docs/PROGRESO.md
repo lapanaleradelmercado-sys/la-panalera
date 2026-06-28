@@ -47,9 +47,15 @@ sitio/
 - Sitio en vivo: https://lapanaleradelmercado-sys.github.io/la-panalera/
 
 ## Pendientes
-- [ ] Reemplazar la **ilustración del hero** por la foto real (el cliente la pasa limpia).
 - [ ] Cargar **catálogo real** de productos (con fotos y precios reales).
-- [ ] Links reales de Instagram y email en el footer.
+
+## Notas de diseño
+- Hero usa **foto real** del cliente (`assets/hero.jpeg`). En mobile se sirve un recorte
+  enfocado (`assets/hero-mobile.jpeg`) vía `<picture>`: en celular la foto va como banner
+  debajo del texto (apilado) para que el texto/botones NO se superpongan con la canasta
+  ni el chupete; en desktop la foto es fondo full-bleed con el texto encima sobre la crema.
+- Instagram conectado (header + footer): https://www.instagram.com/lapanaleradelmercado
+- Sin email en la página (a pedido del cliente).
 
 ## Decisiones
 - HTML/CSS/JS vanilla, sin frameworks (fácil de mantener).

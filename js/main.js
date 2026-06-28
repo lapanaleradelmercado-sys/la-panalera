@@ -136,6 +136,8 @@ function setupWhatsApp() {
   const general = waLink("¡Hola La Pañalera! Quería hacerles una consulta 😊");
   $("#waFloat").href = general;
   $("#footerWa").href = general;
+  const tw = $("#topbarWa");
+  if (tw) tw.href = general;
 }
 
 /* --------- AVISO FLOTANTE (toast) ---------- */
