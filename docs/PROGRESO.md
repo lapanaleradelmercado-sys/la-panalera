@@ -62,6 +62,13 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - [x] Fotos de productos desde la hoja **info** (link de Drive → imagen). Falta hacer
       públicos los archivos en Drive para que se vean.
 
+## Ajustes 2026-06-28 (noche 6)
+- [x] Hero mobile: la canasta se muestra **ENTERA** (`object-fit: contain`, sin recortar
+      ningún objeto), a la derecha del texto, sin quedar debajo. Fundido crema MUY sutil
+      a la izquierda (scrim) en la transición hacia el texto.
+- [x] Sacado el **resaltado azul al tocar** botones/links en mobile
+      (`-webkit-tap-highlight-color: transparent`).
+
 ## Ajustes 2026-06-28 (noche 5)
 - [x] Hero mobile: la canasta más **alta y a la derecha** (la foto llena la columna con
       `object-fit: cover`, col 52%). Su borde izquierdo toca el texto pero no se mete debajo.

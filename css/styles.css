@@ -47,8 +47,9 @@
 }
 
 /* ---------- Reset ---------- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
+a, button, input, label, .cat, .bottomnav__item { -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -301,14 +302,14 @@ img.ico { object-fit: contain; }
   padding: 18px 0 18px 18px;
   position: relative;
   overflow: hidden;
-  min-height: 256px;
+  min-height: 215px;
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  gap: 2px;
+  align-items: center;
+  gap: 0;
 }
 .hero__content {
-  position: relative; z-index: 2; flex: 1 1 auto; max-width: 48%;
+  position: relative; z-index: 2; flex: 0 0 47%; max-width: 47%;
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
 }
 .hero__pic { display: contents; }
@@ -339,12 +340,16 @@ img.ico { object-fit: contain; }
 
 /* foto del hero — detrás del texto (full-bleed) */
 .hero__pic { display: contents; }
-/* MOBILE: la foto (recorte de la canasta) llena la columna derecha, alta y a la derecha */
+/* MOBILE: la canasta ENTERA (contain) a la derecha del texto, sin recortar nada */
 .hero__photo {
-  order: 2; position: static; flex: 0 0 52%; width: 52%; height: auto;
-  align-self: stretch; object-fit: cover; object-position: 42% center; z-index: 0;
+  order: 2; position: static; flex: 0 0 53%; width: 53%; height: auto; max-height: 230px;
+  align-self: center; object-fit: contain; object-position: right center; z-index: 0;
 }
-.hero__scrim { display: none; }
+/* fundido blanco MUY sutil del lado izquierdo (transición hacia el texto) */
+.hero__scrim {
+  display: block; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, #fcf3ee 0%, #fcf3ee 36%, rgba(252,243,238,0) 55%);
+}
 
 /* =========================================================
    CATEGORÍAS
