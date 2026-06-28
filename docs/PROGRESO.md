@@ -62,6 +62,16 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - [x] Fotos de productos desde la hoja **info** (link de Drive → imagen). Falta hacer
       públicos los archivos en Drive para que se vean.
 
+## Ajustes 2026-06-28 (noche)
+- [x] Fotos de productos **funcionando** (cliente hizo públicos los archivos de Drive).
+- [x] **Iconos del cliente** (iconos 1 y 2, gris/coral) en `assets/icons/`: barra inferior
+      (home/cats/wa/ig/cart), barra de anuncios (truck/card), franja de confianza
+      (escudo/truck/soporte/card) y sociales del header. Botón "Finalizar por WhatsApp"
+      del carrito usa `wa-white.png`.
+- [x] Botón "Ver productos" más bajo y menos alto (pegado abajo del hero).
+- [x] Imagen del hero mobile más abierta (se ven los productos en la canasta) + **blur**
+      detrás del texto (backdrop-filter en `.hero__scrim`) para que se lea bien.
+
 ## Ajustes 2026-06-28 (tarde)
 - [x] Saqué el **corazón** de las cards y el **cartel "agregado"** al sumar al carrito.
 - [x] **Lightbox**: tocás la foto de un producto y se ve grande; tocás de nuevo (o Esc) y cierra.

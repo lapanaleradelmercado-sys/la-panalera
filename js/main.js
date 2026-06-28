@@ -248,10 +248,10 @@ function setupProductsPage(activeCat) {
    RENDER: franja de confianza
    ========================================================= */
 const TRUST = [
-  { ico: '<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg>', txt: "Productos confiables" },
-  { ico: '<svg viewBox="0 0 24 24"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17.5" cy="17" r="1.6"/></svg>', txt: "Envíos a todo el país" },
-  { ico: '<svg viewBox="0 0 24 24"><path d="M5 18v-6a7 7 0 0 1 14 0v6"/><rect x="3" y="15" width="4" height="6" rx="1.5"/><rect x="17" y="15" width="4" height="6" rx="1.5"/></svg>', txt: "Atención personalizada" },
-  { ico: '<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>', txt: "Compra 100% segura" },
+  { ico: '<img src="assets/icons/escudo-coral.png" alt="" />', txt: "Productos confiables" },
+  { ico: '<img src="assets/icons/truck-coral.png" alt="" />', txt: "Envíos a todo el país" },
+  { ico: '<img src="assets/icons/soporte-coral.png" alt="" />', txt: "Atención personalizada" },
+  { ico: '<img src="assets/icons/card-coral.png" alt="" />', txt: "Compra 100% segura" },
 ];
 function renderTrust() {
   const row = $("#trustRow");
