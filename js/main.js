@@ -9,14 +9,25 @@
 // Número con código de país, sin "+", sin espacios ni guiones.
 const WHATSAPP = "5492612512059";
 
-/* --------- ÍCONOS (SVG de línea) ---------- */
+/* --------- ÍCONOS DE RUBROS (imágenes reales del cliente) ---------- */
+const catImg = (file) => `<img class="cat__img" src="assets/icons/${file}.png" alt="" />`;
+// Accesorios: carrito de compra con el manubrio a la derecha (espejado)
+const CART_RIGHT =
+  '<svg class="cat__svg" viewBox="0 0 48 48" aria-hidden="true">' +
+    '<g transform="translate(48,0) scale(-1,1)">' +
+      '<path d="M13 16 H40 L37 30 H17 Z" fill="#fdeae0" stroke="#e8856b" stroke-width="2.6" stroke-linejoin="round"/>' +
+      '<path d="M13 16 L9 9 H5" fill="none" stroke="#e8856b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<circle cx="20" cy="36" r="3" fill="#fdeae0" stroke="#e8856b" stroke-width="2.6"/>' +
+      '<circle cx="33" cy="36" r="3" fill="#fdeae0" stroke="#e8856b" stroke-width="2.6"/>' +
+    '</g>' +
+  '</svg>';
 const ICONS = {
-  panales: '<svg viewBox="0 0 48 48"><path d="M6 16c12 0 24 0 36 0 0 14-8 24-18 24S6 30 6 16z"/><path d="M6 16c4 6 8 8 18 8s14-2 18-8"/><path d="M24 24v16"/></svg>',
-  alimentacion: '<svg viewBox="0 0 48 48"><rect x="17" y="14" width="14" height="28" rx="7"/><path d="M19 10h10l-2 4h-6z"/><path d="M17 22h14M17 30h14"/></svg>',
-  accesorios: '<svg viewBox="0 0 48 48"><path d="M8 12h4l3 16h20a2 2 0 0 0 2-1.6L40 16H15"/><circle cx="18" cy="38" r="3"/><circle cx="34" cy="38" r="3"/><path d="M22 16a14 14 0 0 1 14 0"/></svg>',
-  higiene: '<svg viewBox="0 0 48 48"><path d="M8 26h32v4a8 8 0 0 1-8 8H16a8 8 0 0 1-8-8z"/><path d="M14 26V12a4 4 0 0 1 4-4h2"/><path d="M18 12h6"/><path d="M14 38l-2 4M34 38l2 4"/></svg>',
-  ropa: '<svg viewBox="0 0 48 48"><path d="M18 8l6 5 6-5 8 6-4 8-4-2v14H18V20l-4 2-4-8z"/></svg>',
-  juguetes: '<svg viewBox="0 0 48 48"><circle cx="16" cy="12" r="5"/><circle cx="32" cy="12" r="5"/><circle cx="24" cy="26" r="13"/><ellipse cx="24" cy="30" rx="6" ry="5"/><circle cx="19" cy="24" r="2" fill="currentColor"/><circle cx="29" cy="24" r="2" fill="currentColor"/></svg>',
+  panales:      catImg("panales"),
+  alimentacion: catImg("alimentacion"),
+  accesorios:   CART_RIGHT,
+  higiene:      catImg("higiene"),
+  ropa:         catImg("ropa"),
+  juguetes:     catImg("juguetes"),
 };
 
 /* --------- CATEGORÍAS ---------- */
@@ -138,6 +149,8 @@ function setupWhatsApp() {
   $("#footerWa").href = general;
   const tw = $("#topbarWa");
   if (tw) tw.href = general;
+  const fwi = $("#footerWaIcon");
+  if (fwi) fwi.href = general;
 }
 
 /* --------- AVISO FLOTANTE (toast) ---------- */

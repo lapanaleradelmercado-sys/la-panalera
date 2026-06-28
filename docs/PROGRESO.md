@@ -50,12 +50,23 @@ sitio/
 - [ ] Cargar **catálogo real** de productos (con fotos y precios reales).
 
 ## Notas de diseño
-- Hero usa **foto real** del cliente (`assets/hero.jpeg`). En mobile se sirve un recorte
-  enfocado (`assets/hero-mobile.jpeg`) vía `<picture>`: en celular la foto va como banner
-  debajo del texto (apilado) para que el texto/botones NO se superpongan con la canasta
-  ni el chupete; en desktop la foto es fondo full-bleed con el texto encima sobre la crema.
-- Instagram conectado (header + footer): https://www.instagram.com/lapanaleradelmercado
+- **Íconos de rubros:** imágenes reales del cliente en `assets/icons/` (recortadas de
+  `iconos.jpeg` con PIL, fondo transparente). Mapa: panales, alimentacion, higiene, ropa,
+  juguetes. **Accesorios** NO usa el cochecito: usa un **carrito de compra con el manubrio
+  a la derecha** (SVG espejado, en `js/main.js` const `CART_RIGHT`).
+- **Íconos sociales:** `assets/icons/whatsapp.png` e `instagram.png` se usan en el **footer**
+  (sobre el navy lucen bien). En la barra superior se dejaron íconos de línea coral porque
+  los de durazno se lavaban sobre el fondo durazno.
+- **Hero:** foto real `assets/hero.jpeg` (desktop, full-bleed de fondo + scrim crema a la
+  izquierda con el texto encima). En **mobile** la foto también va **detrás** (full-bleed)
+  usando un recorte `assets/hero-mobile.jpeg` (recortado del lado derecho, sin cortar el
+  osito). El chupete puede quedar un poco tapado por el texto (aceptado por el cliente).
+- Instagram conectado (footer): https://www.instagram.com/lapanaleradelmercado
 - Sin email en la página (a pedido del cliente).
+
+## GitHub (token)
+- El token se guarda FUERA del repo en `~/Desktop/La Pañalera/.gh_token` (no se versiona).
+  El cliente pidió NO borrarlo: vamos a trabajar varios días.
 
 ## Decisiones
 - HTML/CSS/JS vanilla, sin frameworks (fácil de mantener).

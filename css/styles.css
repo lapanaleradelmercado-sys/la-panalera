@@ -98,8 +98,9 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
 .topbar__msg .ico { color: var(--accent); }
 .topbar__msg--2, .topbar__sep, .topbar__social { display: none; }
 .topbar__social { gap: 12px; }
-.topbar__social a { color: var(--ink); transition: color .2s var(--ease); }
-.topbar__social a:hover { color: var(--accent); }
+.topbar__social a { color: var(--ink); display: inline-flex; transition: transform .2s var(--ease); }
+.topbar__social a:hover { transform: translateY(-1px); }
+.social-ico { width: 26px; height: 26px; object-fit: contain; }
 
 /* =========================================================
    HEADER
@@ -268,14 +269,14 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
 .hero__inner {
   background: linear-gradient(135deg, var(--peach-50) 0%, var(--peach-100) 100%);
   border-radius: var(--radius-lg);
-  padding: 26px 22px;
+  padding: 30px 22px;
   position: relative;
   overflow: hidden;
+  min-height: 420px;
   display: flex;
-  flex-direction: column;
-  gap: 22px;
+  align-items: center;
 }
-.hero__content { position: relative; z-index: 2; max-width: 100%; order: 1; }
+.hero__content { position: relative; z-index: 2; max-width: 60%; }
 .pill {
   display: inline-block; background: var(--peach-200); color: var(--accent-dark);
   font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
@@ -300,14 +301,19 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
 .btn--soft { background: var(--peach-100); color: var(--accent-dark); width: 100%; justify-content: center; }
 .btn--soft:hover { background: var(--peach-200); }
 
-/* foto del hero — MOBILE: banner debajo del texto (apilado, sin superposición) */
+/* foto del hero — detrás del texto (full-bleed) */
 .hero__pic { display: contents; }
 .hero__photo {
-  order: 2; display: block; width: 100%; height: 208px;
-  object-fit: cover; object-position: center 40%;
-  border-radius: var(--radius);
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 66% center; z-index: 0;
 }
-.hero__scrim { display: none; }
+/* degradé crema a la izquierda para que el texto se lea sobre la foto */
+.hero__scrim {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(100deg,
+    var(--cream) 0%, rgba(255,246,240,.92) 28%,
+    rgba(255,246,240,.5) 50%, rgba(255,246,240,0) 74%);
+}
 
 /* =========================================================
    CATEGORÍAS
@@ -327,8 +333,8 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
   transition: background .2s var(--ease), transform .18s var(--ease);
 }
 .cat:hover { background: var(--peach-50); transform: translateY(-2px); }
-.cat__ico { color: var(--accent); }
-.cat__ico svg { width: 42px; height: 42px; }
+.cat__ico { color: var(--accent); display: grid; place-items: center; }
+.cat__ico svg, .cat__ico img { width: 46px; height: 46px; object-fit: contain; }
 .cat__name { font-size: 14px; font-weight: 600; color: var(--ink); }
 .cat__link { display: none; font-size: 12px; color: var(--accent); font-weight: 600; }
 .cats__all { margin-top: 4px; }
@@ -399,6 +405,10 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
 .footer__inner { display: grid; grid-template-columns: 1fr; gap: 28px; padding-top: 36px; padding-bottom: 28px; }
 .footer__brand .logo__img { width: 88px; height: 88px; margin-bottom: 8px; }
 .footer__brand p { font-size: 14px; max-width: 34ch; }
+.footer__social { display: flex; gap: 10px; margin-top: 16px; }
+.footer__social a { display: inline-flex; transition: transform .2s var(--ease); }
+.footer__social a:hover { transform: translateY(-2px); }
+.footer__social img { width: 42px; height: 42px; object-fit: contain; }
 .footer__col h3 { color: #fff; font-size: 15px; margin-bottom: 12px; }
 .footer__col li { margin-bottom: 8px; }
 .footer__col a { font-size: 14px; transition: color .2s var(--ease); }
@@ -491,7 +501,7 @@ svg path, svg circle, svg rect, svg ellipse, svg line {
     flex-direction: row; justify-content: flex-start; gap: 12px;
     background: var(--white); box-shadow: var(--shadow-sm); padding: 20px 18px;
   }
-  .cat__ico svg { width: 34px; height: 34px; }
+  .cat__ico svg, .cat__ico img { width: 40px; height: 40px; }
   .cat__body { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
   .cat__name { font-size: 15px; }
   .cat__link { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
