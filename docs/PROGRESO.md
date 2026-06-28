@@ -18,9 +18,15 @@ sitio/
 **Cambiar el número de WhatsApp:** `js/main.js` → `const WHATSAPP = "5492612512059";`
 
 **Agregar / cambiar productos:** se editan en la **planilla de Google** (NO en el código).
-Hoja PRODUCTOS, columnas A-ID, B-NOMBRE, C-RUBRO, D-PRECIO. El sitio la lee sola.
+- Hoja **PRODUCTOS** (gid 0): A-ID, B-NOMBRE, C-RUBRO, D-PRECIO.
+- Hoja **info** (gid 247689217): A-ID, B-NOMBRE, C-IMAGEN (link de la foto).
 El RUBRO tiene que ser uno de: PAÑALES, ALIMENTACION, ACCESORIOS, HIGIENE, ROPA, JUGUETES
-(no importan mayúsculas ni acentos). La URL de la planilla está en `js/main.js` (`SHEET_CSV`).
+(no importan mayúsculas ni acentos). Las dos hojas se unen por **ID**. URLs en `js/main.js`.
+
+**Fotos (IMPORTANTE):** la columna IMAGEN puede ser un link de Google Drive
+(`.../file/d/ID/view`). El sitio lo convierte solo a imagen directa, PERO el archivo de
+Drive tiene que estar compartido como **"Cualquiera con el enlace"**, si no Google no la
+muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 
 **Cambiar colores:** `css/styles.css` → bloque `:root` (acento coral = `--accent`).
 
@@ -55,8 +61,8 @@ El RUBRO tiene que ser uno de: PAÑALES, ALIMENTACION, ACCESORIOS, HIGIENE, ROPA
       sincroniza con el panel del carrito en ambos sentidos).
 
 ## Pendientes
-- [ ] Agregar **columna de imagen** a la planilla y mostrar la foto del producto
-      (hoy se ve un ícono placeholder porque la planilla no trae foto).
+- [ ] **Hacer públicos los archivos de fotos en Google Drive** ("Cualquiera con el enlace").
+      El código de imágenes ya está listo; sin esto las fotos no cargan (Google pide login).
 - [ ] Más productos reales en la planilla.
 
 ## Notas de diseño

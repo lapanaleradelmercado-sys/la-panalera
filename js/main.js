@@ -11,9 +11,13 @@ const WHATSAPP = "5492612512059";
 // Instagram
 const INSTAGRAM = "https://www.instagram.com/lapanaleradelmercado";
 
-// Planilla de productos (Google Sheet publicada como CSV)
-const SHEET_CSV =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSAL5Y6DSQSj4pkLiUHlOWjr4lhX_ZgSaWo_L7S_wPUQ3rn55R-1EwCs35n_dkj2ZCBBTTfeVA35cjB/pub?output=csv";
+// Planilla publicada como CSV. Dos hojas:
+//   PRODUCTOS (precios)  -> gid 0      : ID, NOMBRE, RUBRO, PRECIO
+//   info      (imágenes) -> gid 247689217 : ID, NOMBRE, IMAGEN
+const SHEET_BASE =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSAL5Y6DSQSj4pkLiUHlOWjr4lhX_ZgSaWo_L7S_wPUQ3rn55R-1EwCs35n_dkj2ZCBBTTfeVA35cjB/pub";
+const SHEET_PRODUCTOS = `${SHEET_BASE}?gid=0&single=true&output=csv`;
+const SHEET_IMAGENES = `${SHEET_BASE}?gid=247689217&single=true&output=csv`;
 
 /* --------- ÍCONOS DE RUBROS (imágenes reales del cliente) ---------- */
 const catImg = (file) => `<img class="cat__img" src="assets/icons/${file}.png" alt="" />`;
@@ -80,21 +84,49 @@ function parseCSV(text) {
   return rows;
 }
 
+// Convierte un link de Google Drive (.../file/d/ID/view o ?id=ID) a imagen directa.
+// Si ya es una URL de imagen normal, la deja igual.
+function imageUrl(raw) {
+  const u = (raw || "").trim();
+  if (!u) return "";
+  const m = u.match(/\/d\/([-\w]{20,})/) || u.match(/[?&]id=([-\w]{20,})/);
+  if (m) return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1000`;
+  return u;
+}
+
+// baja un CSV y devuelve las filas SIN el encabezado
+async function fetchSheet(url) {
+  const res = await fetch(url);
+  const rows = parseCSV(await res.text()).filter((r) => r.some((c) => c.trim() !== ""));
+  rows.shift(); // encabezados
+  return rows;
+}
+
 async function loadProducts() {
   try {
-    const res = await fetch(SHEET_CSV);
-    const text = await res.text();
-    const rows = parseCSV(text).filter((r) => r.some((c) => c.trim() !== ""));
-    rows.shift(); // saca la fila de encabezados
-    PRODUCTS = rows
+    const [prodRows, imgRows] = await Promise.all([
+      fetchSheet(SHEET_PRODUCTOS),
+      fetchSheet(SHEET_IMAGENES).catch(() => []), // si la hoja de imágenes falla, seguimos sin fotos
+    ]);
+
+    // mapa de imágenes por ID
+    const imgById = {};
+    imgRows.forEach((r) => {
+      const id = (r[0] || "").trim();
+      if (id) imgById[id] = imageUrl(r[2]);
+    });
+
+    PRODUCTS = prodRows
       .map((r) => {
         const cat = norm(r[2]);
+        const id = (r[0] || "").trim();
         return {
-          id: (r[0] || "").trim(),
+          id,
           name: titleCase((r[1] || "").trim()),
           cat,
           catName: catName(cat),
           price: Number(String(r[3] || "").replace(/[^\d]/g, "")) || 0,
+          img: imgById[id] || "",
         };
       })
       .filter((p) => p.name);
@@ -159,6 +191,7 @@ function productCard(p) {
   return `
     <article class="card" data-id="${p.id}">
       <div class="card__media">
+        ${p.img ? `<img class="card__photo" src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.remove()" />` : ""}
         <button class="card__fav" aria-label="Agregar a favoritos">${HEART}</button>
         ${PLACEHOLDER_ICON}
       </div>
