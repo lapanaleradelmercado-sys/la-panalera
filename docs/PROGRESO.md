@@ -62,6 +62,14 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - [x] Fotos de productos desde la hoja **info** (link de Drive → imagen). Falta hacer
       públicos los archivos en Drive para que se vean.
 
+## Ajustes 2026-06-28 (noche 3)
+- [x] Hero como el mockup: **compacto**, canasta **a la derecha** del texto (no abajo).
+      Mobile y desktop usan `hero.jpeg` (la ancha) con `cover`; en mobile `object-position`
+      a la derecha (95%) y texto a la izquierda con scrim crema. `hero-mobile.jpeg` ya no se usa.
+- [x] **Rayitas rosas** (`--divider: #f3d2cb`) separando las **categorías** (grid con líneas,
+      solo mobile; en desktop son cards sueltas) y los items de la **franja de confianza**
+      (divisores verticales, mobile y desktop). Igual que el mockup.
+
 ## Ajustes 2026-06-28 (noche 2)
 - [x] Botón "Ver productos" en **un solo renglón** (`white-space: nowrap`), menos alto.
 - [x] **Sin blur** en el hero (se sacó el backdrop-filter).
