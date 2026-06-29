@@ -249,9 +249,9 @@ function setupProductsPage(activeCat) {
    ========================================================= */
 const TRUST = [
   { ico: '<img src="assets/icons/escudo-coral.png" alt="" />', txt: "Productos confiables" },
-  { ico: '<img src="assets/icons/truck-coral.png" alt="" />', txt: "Envíos a todo el país" },
+  { ico: '<img src="assets/icons/truck-coral.png" alt="" />', txt: "Envíos en Gran Mendoza" },
   { ico: '<img src="assets/icons/soporte-coral.png" alt="" />', txt: "Atención personalizada" },
-  { ico: '<img src="assets/icons/card-coral.png" alt="" />', txt: "Compra 100% segura" },
+  { ico: '<img src="assets/icons/oferta-coral.png" alt="" />', txt: "10% en efectivo o transferencia" },
 ];
 function renderTrust() {
   const row = $("#trustRow");

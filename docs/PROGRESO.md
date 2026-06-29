@@ -163,3 +163,10 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
   hace `fetch` del CSV y arma las cards; agregar productos = editar la planilla.
 - Carrito client-side (localStorage): junta el pedido y se cierra por WhatsApp.
 - Sitio multi-página: `index.html` (home) + `productos.html` (catálogo con ?rubro=).
+
+## Datos reales del negocio (2026-06-28) — se sacó la info falsa del mockup
+- Envíos: SOLO Gran Mendoza (antes decía "a todo el país").
+- 10% OFF en efectivo o transferencia (antes decía "3 y 6 cuotas sin interés" → FALSO, no hacen cuotas).
+- Ubicación: Local 9, sector galería (link a Google Maps en el footer).
+- Horario: Lun a Sáb 8:30 a 17:00 hs (en el footer).
+- Se quitaron los montos inventados ($15.000 / $40.000).
