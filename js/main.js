@@ -47,7 +47,7 @@ let PRODUCTS = [];
 const PLACEHOLDER_ICON = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="28" rx="4"/><circle cx="17" cy="20" r="3"/><path d="M6 32l9-8 7 6 8-9 12 11"/></svg>';
 const HEART = '<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c-1 4-7 9-7 9z"/></svg>';
 const CART_ADD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M13 8v5M10.5 10.5h5" opacity=".9"/></svg>';
-const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>';
+const TRASH = '<img class="trash-ico" src="assets/icons/tacho-coral.png" alt="Eliminar" />';
 
 /* --------- HELPERS ---------- */
 const $ = (sel) => document.querySelector(sel);
@@ -248,7 +248,7 @@ function setupProductsPage(activeCat) {
    RENDER: franja de confianza
    ========================================================= */
 const TRUST = [
-  { ico: '<img src="assets/icons/escudo-coral.png" alt="" />', txt: "Productos confiables" },
+  { ico: '<img src="assets/icons/escudo-coral.png" alt="" />', txt: "Productos de calidad" },
   { ico: '<img src="assets/icons/truck-coral.png" alt="" />', txt: "Envíos en Gran Mendoza" },
   { ico: '<img src="assets/icons/soporte-coral.png" alt="" />', txt: "Atención personalizada" },
   { ico: '<img src="assets/icons/oferta-coral.png" alt="" />', txt: "10% en efectivo o transferencia" },

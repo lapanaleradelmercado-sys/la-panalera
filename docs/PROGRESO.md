@@ -170,3 +170,9 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - Ubicación: Local 9, sector galería (link a Google Maps en el footer).
 - Horario: Lun a Sáb 8:30 a 17:00 hs (en el footer).
 - Se quitaron los montos inventados ($15.000 / $40.000).
+
+## Ajustes 2026-06-29
+- [x] Franja de confianza en mobile a **2x2** (más prolijo). "Productos confiables" → "Productos de calidad".
+- [x] iconos 3: ubicación/reloj/tacho (coral+gris). Footer usa ubicacion/reloj-coral; WA/IG del footer pasan a wa/ig-coral (línea) para misma estética. Cards usan tacho-coral.
+- [x] Hero desktop: se sacó la confianza repetida (.hero__trust). Se sacó el ícono de "mi cuenta" (.header__user).
+- [x] Hero MOBILE usa **hero 3** (imagen con el texto ya incluido); el HTML oculta pill/título/bajada y solo posiciona el botón "Ver productos" (sin flecha) abajo-izquierda, sin tapar el chupete. Hero apaisado con aspect-ratio 1503/1047.
