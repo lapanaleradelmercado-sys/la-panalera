@@ -62,6 +62,13 @@ muestra (pide login). Si una foto falla, la card muestra un ícono placeholder.
 - [x] Fotos de productos desde la hoja **info** (link de Drive → imagen). Falta hacer
       públicos los archivos en Drive para que se vean.
 
+## Ajustes 2026-06-28 (noche 7)
+- [x] **Hero mobile calcado al mockup**: la clave era que el hero es **apaisado** (bajito y
+      ancho, ~268px), NO alto. La foto va de **fondo completo** (`object-fit: cover`,
+      `object-position: 62%`), canasta grande a la derecha, texto encima de la crema a la
+      izquierda con scrim. Mobile usa la imagen **3:2 original** (`hero-mobile.jpeg`), que es
+      la que calza con el mockup. Desktop sigue con `hero.jpeg` (16:9).
+
 ## Ajustes 2026-06-28 (noche 6)
 - [x] Hero mobile: la canasta se muestra **ENTERA** (`object-fit: contain`, sin recortar
       ningún objeto), a la derecha del texto, sin quedar debajo. Fundido crema MUY sutil
